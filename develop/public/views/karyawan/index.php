@@ -2,8 +2,9 @@
 session_name("hc_session");
 session_start();
 include '../../header.php';
+
+include 'modal_date.php';
 include 'add_modal.php';
-// include 'edit_modal.php';
 ?>
 
 <main>
@@ -17,6 +18,9 @@ include 'add_modal.php';
 
                 <div class="d-flex gap-2">
                     <a href="export_karyawan.php" class="btn btn-success btn-sm">Download</a>
+                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg1">
+                        Update Data
+                    </button>
                     <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
                         <a href="bulk_update_karyawan.php" class="btn btn-primary btn-sm text-white">Update Data</a>
                     <?php } ?>
@@ -158,7 +162,7 @@ include 'add_modal.php';
                         var id_karyawan = $(this).data('id_karyawan');
                         var mode = $(this).data('mode');
 
-                        console.log("ID:", id_karyawan, "Mode:", mode); // cek di console
+                        // console.log("ID:", id_karyawan, "Mode:", mode); // cek di console
 
                         $.ajax({
                             url: 'edit_modal.php',

@@ -86,7 +86,7 @@ $time = date("H:i");
 
                         <div class="col-md-4 mb-3">
                             <label for="masa_kerja" class="form-label"><b>MASA KERJA</b></label>
-                            <input type="text" class="form-control" id="masa_kerja" name="masa_kerja">
+                            <input type="text" class="form-control bg-secondary text-white" id="masa_kerja" name="masa_kerja" readonly>
                         </div>
 
                         <div class="col-md-4 mb-3">
@@ -122,7 +122,7 @@ $time = date("H:i");
 
                         <div class="col-md-4 mb-3">
                             <label for="usia" class="form-label"><b>USIA</b></label>
-                            <input type="text" class="form-control" id="usia" name="usia">
+                            <input type="text" class="form-control  bg-secondary text-white" id="usia" name="usia" readonly>
                         </div>
 
                         <div class="col-md-4 mb-3">
@@ -171,12 +171,12 @@ $time = date("H:i");
                             <input type="text" class="form-control" id="kecamatan" name="kecamatan">
                         </div>
 
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="bpjs_kesehatan" class="form-label"><b>BPJS KESEHATAN</b></label>
                             <input type="text" class="form-control" id="bpjs_kesehatan" name="bpjs_kesehatan">
                         </div>
 
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="bpjs_ketenagakerjaan" class="form-label"><b>BPJS KETENAGAKERJAAN</b></label>
                             <input type="text" class="form-control" id="bpjs_ketenagakerjaan" name="bpjs_ketenagakerjaan">
                         </div>
@@ -248,7 +248,7 @@ $time = date("H:i");
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success" name="add_karyawan">Simpan</button>
                 </div>
             </form>
@@ -279,6 +279,42 @@ $time = date("H:i");
         branchSelect.value = ""; // reset pilihan setiap kali kategori berubah
     });
 </script>
+
+<script>
+    function hitungSelisihTanggal(tanggalAwalStr) {
+        const tanggalAwal = new Date(tanggalAwalStr);
+        const today = new Date();
+
+        let years = today.getFullYear() - tanggalAwal.getFullYear();
+        let months = today.getMonth() - tanggalAwal.getMonth();
+        let days = today.getDate() - tanggalAwal.getDate();
+
+        if (days < 0) months--;
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        return `${years} TAHUN ${months} BULAN`;
+    }
+
+    function updateSelisihTanggal(inputId, outputId) {
+        const input = document.getElementById(inputId);
+        const output = document.getElementById(outputId);
+
+        function update() {
+            output.value = input.value ? hitungSelisihTanggal(input.value) : "";
+        }
+
+        input.addEventListener("change", update);
+        window.addEventListener("load", update);
+    }
+
+    // Terapkan ke join_date → masa_kerja dan birth_date → usia
+    updateSelisihTanggal("join_date", "masa_kerja");
+    updateSelisihTanggal("birth_date", "usia");
+</script>
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
