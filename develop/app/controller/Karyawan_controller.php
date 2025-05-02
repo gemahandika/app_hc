@@ -1,4 +1,5 @@
 <?php
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 require_once "../config/koneksi.php";
 require_once "../assets/sweetalert/dist/func_sweetAlert.php";
 
@@ -223,17 +224,26 @@ if (isset($_POST['add_karyawan'])) {
     } else {
         showSweetAlert('error', 'Gagal', 'Terjadi kesalahan saat menyimpan perubahan.', '#d33', '../../public/views/karyawan/index.php');
     }
-} elseif (isset($_POST['update_all_karyawan']) && isset($_POST['karyawan'])) {
-    foreach ($_POST['karyawan'] as $id => $data) {
-        $id_karyawan = intval($data['id']);
-        $masa_kerja = trim($data['masa_kerja']);
-        $usia = trim($data['usia']);
+} else
+if (isset($_POST['update_all_karyawan']) && isset($_POST['karyawan'])) {
+    try {
+        foreach ($_POST['karyawan'] as $id => $data) {
+            $id_karyawan = intval($data['id']);
+            $masa_kerja = trim($data['masa_kerja']);
+            $usia = trim($data['usia']);
 
-        $stmt = $koneksi->prepare("UPDATE tb_karyawan SET masa_kerja = ?, usia = ? WHERE id_karyawan = ?");
-        $stmt->bind_param("ssi", $masa_kerja, $usia, $id_karyawan);
-        $stmt->execute();
-        $stmt->close();
+            $stmt = $koneksi->prepare("UPDATE tb_karyawan SET masa_kerja = ?, usia = ? WHERE id_karyawan = ?");
+            if (!$stmt) {
+                throw new Exception("Prepare failed: " . $koneksi->error);
+            }
+
+            $stmt->bind_param("ssi", $masa_kerja, $usia, $id_karyawan);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        showSweetAlert('success', 'Berhasil', 'Data karyawan berhasil diperbarui.', '#3085d6', '../../public/views/karyawan/index.php');
+    } catch (Exception $e) {
+        showSweetAlert('error', 'Gagal', 'Terjadi kesalahan: ' . $e->getMessage(), '#d33', '../../public/views/karyawan/index.php');
     }
-
-    showSweetAlert('success', 'Berhasil', 'Data karyawan berhasil diperbarui.', '#3085d6', '../../public/views/karyawan/index.php');
 }
