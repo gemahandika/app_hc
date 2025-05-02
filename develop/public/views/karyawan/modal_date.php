@@ -6,15 +6,16 @@ $time = date("H:i");
 <div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-                <h6 class="modal-title" id="modalAparaturLabel">TAMBAH KARYAWAN BARU</h6>
+            <div class="modal-header bg-primary text-white">
+                <h6 class="modal-title" id="modalAparaturLabel">SYNCRONE DATA KARYAWAN</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <form action="../../../app/controller/Karyawan_controller.php" method="POST">
                 <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                     <div class="row">
-                        <label><b>Apakah Anda Ingin Update Data?</b></label>
+                        <label><b class="text-danger">Proses Ini akan mengupdate data MASA KERJA dan USIA Karyawan.</b> <br><br>
+                            <b>Apakah Anda Ingin Syncrone Data?</b></label>
                     </div>
                     <?php
                     $query = mysqli_query($koneksi, "SELECT id_karyawan, nama_karyawan, join_date, birth_date FROM tb_karyawan WHERE status_resign = 'NO'");
@@ -25,16 +26,16 @@ $time = date("H:i");
                         $birth_date = $data['birth_date'];
                     ?>
                         <!-- Gunakan struktur array -->
-                        <input type="text" name="karyawan[<?= $id ?>][id]" value="<?= $id ?>">
-                        <input type="text" class="join-date" data-id="<?= $id ?>" value="<?= $join_date ?>">
-                        <input type="text" name="karyawan[<?= $id ?>][masa_kerja]" class="masa-kerja" id="masa_kerja_<?= $id ?>" readonly>
-                        <input type="text" class="birthdate" data-id="<?= $id ?>" value="<?= $birth_date ?>">
-                        <input type="text" name="karyawan[<?= $id ?>][usia]" class="usia" id="usia_<?= $id ?>" readonly>
+                        <input type="hidden" name="karyawan[<?= $id ?>][id]" value="<?= $id ?>">
+                        <input type="hidden" class="join-date" data-id="<?= $id ?>" value="<?= $join_date ?>">
+                        <input type="hidden" name="karyawan[<?= $id ?>][masa_kerja]" class="masa-kerja" id="masa_kerja_<?= $id ?>" readonly>
+                        <input type="hidden" class="birthdate" data-id="<?= $id ?>" value="<?= $birth_date ?>">
+                        <input type="hidden" name="karyawan[<?= $id ?>][usia]" class="usia" id="usia_<?= $id ?>" readonly>
                     <?php endwhile; ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" name="update_all_karyawan">Update</button>
+                    <button type="submit" class="btn btn-primary" name="update_all_karyawan">Syncrone</button>
                 </div>
             </form>
 

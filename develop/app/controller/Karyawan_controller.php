@@ -242,7 +242,7 @@ if (isset($_POST['update_all_karyawan']) && isset($_POST['karyawan'])) {
             $stmt->close();
         }
 
-        showSweetAlert('success', 'Berhasil', 'Data karyawan berhasil diperbarui.', '#3085d6', '../../public/views/karyawan/index.php');
+        showSweetAlert('success', 'Berhasil', 'Data karyawan berhasil di Syncrone.', '#3085d6', '../../public/views/karyawan/index.php');
     } catch (Exception $e) {
         showSweetAlert('error', 'Gagal', 'Terjadi kesalahan: ' . $e->getMessage(), '#d33', '../../public/views/karyawan/index.php');
     }
