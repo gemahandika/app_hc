@@ -6,7 +6,7 @@ include '../../header.php';
 
 <main>
     <div class="container-fluid px-4">
-        <h3 class="mt-4">Data Karyawan Resign</h3>
+        <h3 class="mt-4" style="border-bottom: 1px solid black;">Data Karyawan Resign</h3>
         <div class="card mb-4 mt-4">
             <div class="card-body">
                 <table id="example" class="display" style="width:100%">

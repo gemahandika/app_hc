@@ -3,6 +3,8 @@ session_name("hc_session");
 session_start();
 include '../../header.php';
 include '../../../app/models/karyawan_models.php';
+$date = date('Y-m-d');
+$time = date("H:i");
 ?>
 
 <main>
@@ -115,10 +117,32 @@ include '../../../app/models/karyawan_models.php';
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-chart-pie me-1"></i>
-                        Diagram Pie Karyawan
+                        <span class="fw-bold">Karyawan KCU dan AGEN </span>
                     </div>
                     <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                    <div class="card-footer small text-muted">Updated <?= $date ?></div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-header text-danger fw-bold">
+                        <i class="fas fa-chart-line me-1"></i>
+                        <span class="fw-bold">Karyawan Resign 5 Tahun Terakhir</span>
+                    </div>
+                    <div class="card-body"><canvas id="resignChart" width="100%" height="50"></canvas></div>
+                    <div class="card-footer small text-muted">Updated <?= $date ?></div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-header text-primary">
+                        <i class="fas fa-chart-bar me-1"></i>
+                        <span class="fw-bold">Karyawan Join 5 Tahun terkahir</span>
+                    </div>
+                    <div class="card-body" style="overflow-x: auto"><canvas id="joinChart" width="100%" height="25"></canvas></div>
+                    <div class="card-footer small text-muted">Updated <?= $date ?></div>
                 </div>
             </div>
 
@@ -190,6 +214,78 @@ include '../../../app/models/karyawan_models.php';
     });
 </script>
 
+<script>
+    const joinLabels = <?php echo json_encode($joinLabels); ?>;
+    const joinData = <?php echo json_encode($joinData); ?>;
+
+    const resignLabels = <?php echo json_encode($resignLabels); ?>;
+    const resignData = <?php echo json_encode($resignData); ?>;
+
+    // Bar Chart untuk Join
+    const joinChart = new Chart(document.getElementById('joinChart'), {
+        type: 'bar',
+        data: {
+            labels: joinLabels,
+            datasets: [{
+                label: 'Karyawan Masuk',
+                data: joinData,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Bulan'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Jumlah Karyawan'
+                    }
+                }
+            }
+        }
+    });
+
+    // Line Chart untuk Resign
+    const resignChart = new Chart(document.getElementById('resignChart'), {
+        type: 'line',
+        data: {
+            labels: resignLabels,
+            datasets: [{
+                label: 'Karyawan Resign',
+                data: resignData,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Bulan'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Jumlah Karyawan'
+                    }
+                }
+            }
+        }
+    });
+</script>
 
 <?php
 include '../../footer.php';

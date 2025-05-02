@@ -9,7 +9,7 @@ include 'add_modal.php';
 
 <main>
     <div class="container-fluid px-4">
-        <h3 class="mt-4">Data Karyawan</h3>
+        <h3 class="mt-4" style="border-bottom: 1px solid black;">Data Karyawan</h3>
         <div class="card mb-4 mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">
