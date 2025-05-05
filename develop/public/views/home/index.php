@@ -24,13 +24,13 @@ $time = date("H:i");
             <div class="col-md-3">
                 <label for="start_date" class="form-label">Dari Tanggal</label>
                 <input type="date" class="form-control" id="start_date" name="start_date"
-                    value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>" required>
+                    value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
             </div>
 
             <div class="col-md-3">
                 <label for="end_date" class="form-label">Sampai Tanggal</label>
                 <input type="date" class="form-control" id="end_date" name="end_date"
-                    value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>" required>
+                    value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
             </div>
 
             <div class="col-md-3">
