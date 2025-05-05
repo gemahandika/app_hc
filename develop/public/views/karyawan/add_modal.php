@@ -102,7 +102,16 @@ $time = date("H:i");
 
                         <div class="col-md-4 mb-3">
                             <label for="jabatan" class="form-label"><b>JABATAN</b></label>
-                            <input type="text" class="form-control" id="jabatan" name="jabatan">
+                            <select class="form-select form-control" id="jabatan" name="jabatan">
+                                <option value="">-- Pilih Jabatan --</option>
+                                <option value="STAFF">STAFF</option>
+                                <option value="PIC">PIC</option>
+                                <option value="LEADER">LEADER</option>
+                                <option value="HEAD UNIT">HEAD UNIT</option>
+                                <option value="SEACTION HEAD">SEACTION HEAD</option>
+                                <option value="SR. HEAD UNIT">SR. HEAD UNIT</option>
+                                <option value="MANAGER">MANAGER</option>
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-3">
