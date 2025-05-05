@@ -31,10 +31,10 @@ if (isset($_POST['submit'])) {
         }
 
         $id     = intval($row[0]);
-        $status_resign = $koneksi->real_escape_string($row[1]);
+        $birth_date = $koneksi->real_escape_string($row[1]);
 
 
-        $sql = "UPDATE tb_karyawan SET status_resign='$status_resign' WHERE id_karyawan=$id";
+        $sql = "UPDATE tb_karyawan SET birth_date='$birth_date' WHERE id_karyawan=$id";
         $koneksi->query($sql);
     }
 

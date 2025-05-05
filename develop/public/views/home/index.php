@@ -128,7 +128,7 @@ $time = date("H:i");
                 <div class="card mb-4">
                     <div class="card-header text-danger fw-bold">
                         <i class="fas fa-chart-line me-1"></i>
-                        <span class="fw-bold">Karyawan Resign 5 Tahun Terakhir</span>
+                        <span class="fw-bold">Karyawan Resign 2 Tahun Terakhir</span>
                     </div>
                     <div class="card-body"><canvas id="resignChart" width="100%" height="50"></canvas></div>
                     <div class="card-footer small text-muted">Updated <?= $date ?></div>
@@ -139,7 +139,7 @@ $time = date("H:i");
                 <div class="card mb-4">
                     <div class="card-header text-primary">
                         <i class="fas fa-chart-bar me-1"></i>
-                        <span class="fw-bold">Karyawan Join 5 Tahun terkahir</span>
+                        <span class="fw-bold">Karyawan Join 2 Tahun terkahir</span>
                     </div>
                     <div class="card-body" style="overflow-x: auto"><canvas id="joinChart" width="100%" height="25"></canvas></div>
                     <div class="card-footer small text-muted">Updated <?= $date ?></div>
