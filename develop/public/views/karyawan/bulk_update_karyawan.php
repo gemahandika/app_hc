@@ -31,10 +31,10 @@ if (isset($_POST['submit'])) {
         }
 
         $id     = intval($row[0]);
-        $gender = $koneksi->real_escape_string($row[1]);
+        $pendidikan_terakhir = $koneksi->real_escape_string($row[1]);
 
 
-        $sql = "UPDATE tb_karyawan SET gender='$gender' WHERE id_karyawan=$id";
+        $sql = "UPDATE tb_karyawan SET pendidikan_terakhir='$pendidikan_terakhir' WHERE id_karyawan=$id";
         $koneksi->query($sql);
     }
 
