@@ -58,6 +58,7 @@ if ($resign === 'YES') {
                             <th style="font-size: 0.75rem;">NIK VENDOR</th>
                             <th style="font-size: 0.75rem;">NAMA KARYAWAN</th>
                             <th style="font-size: 0.75rem;">VENDOR</th>
+                            <th style="font-size: 0.75rem;">HANDPHONE</th>
                             <th style="font-size: 0.75rem;">ID FINGER</th>
                             <th style="font-size: 0.75rem;">JOINDATE</th>
                             <th style="font-size: 0.75rem;">MASA KERJA</th>
@@ -79,7 +80,6 @@ if ($resign === 'YES') {
                             <th style="font-size: 0.75rem;">NAMA CV/PERUSAHAAN MITRA</th>
                             <th style="font-size: 0.75rem;">STATUS PEKERJAAN</th>
                             <th style="font-size: 0.75rem;">STATUS PERNIKAHAN</th>
-
                             <th style="font-size: 0.75rem;">KET INDUCTION</th>
                             <th style="font-size: 0.75rem;">SERVICE BY HEART</th>
                             <th style="font-size: 0.75rem;">CODE OF CONDUCT</th>
@@ -133,6 +133,7 @@ if ($resign === 'YES') {
                             <th class="kecil-normal"><?= $data['nik_vendor'] ?></th>
                             <th class="kecil-normal"><?= $data['nama_karyawan'] ?></th>
                             <th class="kecil-normal"><?= $data['vendor'] ?></th>
+                            <th class="kecil-normal"><?= $data['phone'] ?></th>
                             <th class="kecil-normal"><?= $data['id_finger'] ?></th>
                             <th class="kecil-normal"><?= $data['join_date'] ?></th>
                             <th class="kecil-normal"><?= $data['masa_kerja'] ?></th>
@@ -154,7 +155,6 @@ if ($resign === 'YES') {
                             <th class="kecil-normal"><?= $data['perusahaan_mitra'] ?></th>
                             <th class="kecil-normal"><?= $data['status_pekerjaan'] ?></th>
                             <th class="kecil-normal"><?= $data['status_pernikahan'] ?></th>
-
                             <th class="kecil-normal"><?= $data['ket_induction'] ?></th>
                             <th class="kecil-normal"><?= $data['service_byheart'] ?></th>
                             <th class="kecil-normal"><?= $data['code_ofconduct'] ?></th>

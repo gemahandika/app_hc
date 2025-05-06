@@ -17,11 +17,12 @@ include 'add_modal.php';
                 </button>
 
                 <div class="d-flex gap-2">
-                    <a href="export_karyawan.php" class="btn btn-success btn-sm">Download</a>
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg1">
                         Syncrone Data
                     </button>
+                    <a href="export_karyawan.php" class="btn btn-success btn-sm">Download Data</a>
                     <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
+                        <a href="bulk_insert_karyawan.php" class="btn btn-warning btn-sm text-primary"> Upload Data</a>
                         <a href="bulk_update_karyawan.php" class="btn btn-primary btn-sm text-white">Update Data</a>
                     <?php } ?>
                 </div>
@@ -39,6 +40,7 @@ include 'add_modal.php';
                             <th style="font-size: 0.75rem;">NIK VENDOR</th>
                             <th style="font-size: 0.75rem;">NAMA KARYAWAN</th>
                             <th style="font-size: 0.75rem;">VENDOR</th>
+                            <th style="font-size: 0.75rem;">HANDPHONE</th>
                             <th style="font-size: 0.75rem;">ID FINGER</th>
                             <th style="font-size: 0.75rem;">JOINDATE</th>
                             <th style="font-size: 0.75rem;">MASA KERJA</th>
@@ -111,6 +113,7 @@ include 'add_modal.php';
                             <th class="kecil-normal"><?= $data['nik_vendor'] ?></th>
                             <th class="kecil-normal"><?= $data['nama_karyawan'] ?></th>
                             <th class="kecil-normal"><?= $data['vendor'] ?></th>
+                            <th class="kecil-normal"><?= $data['phone'] ?></th>
                             <th class="kecil-normal"><?= $data['id_finger'] ?></th>
                             <th class="kecil-normal"><?= $data['join_date'] ?></th>
                             <th class="kecil-normal"><?= $data['masa_kerja'] ?></th>

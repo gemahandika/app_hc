@@ -75,6 +75,11 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
+                            <label for="phone" class="form-label"><b>NO. HANDPHONE</b></label>
+                            <input type="text" class="form-control" id="phone" name="phone">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
                             <label for="id_finger" class="form-label"><b>ID FINGER</b></label>
                             <input type="text" class="form-control" id="id_finger" name="id_finger">
                         </div>
