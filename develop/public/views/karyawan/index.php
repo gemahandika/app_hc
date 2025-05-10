@@ -26,9 +26,7 @@ $usiaOptions    = mysqli_query($koneksi, "SELECT DISTINCT usia FROM tb_karyawan 
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg1">
                         Syncrone Data
                     </button>
-                    <a href="export_karyawan_filter.php?filter_section=<?= $_GET['filter_section'] ?? '' ?>&filter_gen=<?= $_GET['filter_gen'] ?? '' ?>&filter_usia=<?= $_GET['filter_usia'] ?? '' ?>" class="btn btn-success btn-sm">Download Filter</a>
-
-                    <a href="export_karyawan.php" class="btn btn-success btn-sm">Download Data</a>
+                    <a href="export_karyawan_filter.php?filter_section=<?= $_GET['filter_section'] ?? '' ?>&filter_gen=<?= $_GET['filter_gen'] ?? '' ?>&filter_usia=<?= $_GET['filter_usia'] ?? '' ?>" class="btn btn-success btn-sm">Download Data</a>
                     <a href="bulk_insert_karyawan.php" class="btn btn-warning btn-sm text-primary"> Upload Data</a>
                     <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
                         <a href="bulk_update_karyawan.php" class="btn btn-primary btn-sm text-white">Update Data</a>
