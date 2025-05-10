@@ -74,7 +74,7 @@ $status = $data1["status"];
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">=====================</div>
                         <a class="nav-link" href="../home/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt me-1"></i></div>
                             Dashboard
                         </a>
                         <!-- <div class="sb-sidenav-menu-heading">Interface</div> -->
@@ -89,7 +89,7 @@ $status = $data1["status"];
                         <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#submenuDatabase" aria-expanded="false" aria-controls="submenuDatabase">
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-database"></i>
+                                    <i class="fas fa-database me-1"></i>
                                 </div>
                                 Setting Database
                                 <i class="fas fa-chevron-down ms-auto toggle-arrow"></i>
