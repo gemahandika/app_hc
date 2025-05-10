@@ -3,6 +3,10 @@ if (!isset($_SESSION['admin_username'])) {
     header("location:../login/login.php");
 }
 include '../../../app/config/koneksi.php';
+$user1 = $_SESSION['admin_username'];
+$sql = mysqli_query($koneksi, "SELECT * FROM user WHERE username='$user1'") or die(mysqli_error($koneksi));
+$data1 = $sql->fetch_array();
+$status = $data1["status"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,9 +32,10 @@ include '../../../app/config/koneksi.php';
 
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> -->
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
 </head>
 
@@ -50,7 +55,7 @@ include '../../../app/config/koneksi.php';
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">ADMIN <i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $status ?> <i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <!-- <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -82,6 +87,28 @@ include '../../../app/config/koneksi.php';
                             Karyawan Resign
                         </a>
                         <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#submenuDatabase" aria-expanded="false" aria-controls="submenuDatabase">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                Setting Database
+                                <i class="fas fa-chevron-down ms-auto toggle-arrow"></i>
+                            </a>
+
+                            <div class="collapse" id="submenuDatabase">
+                                <ul class="sb-sidenav-menu-nested nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">- Data Section</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">- Data Unit</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">- Data Posisi</a>
+                                    </li>
+                                </ul>
+                            </div>
+
                             <a class="nav-link" href="../user_app/index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-gears"></i></div>
                                 User App

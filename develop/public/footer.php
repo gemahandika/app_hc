@@ -77,6 +77,22 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#submenuDatabase').on('show.bs.collapse', function() {
+            $(this).prev('.nav-link').find('.toggle-arrow')
+                .removeClass('fa-chevron-down')
+                .addClass('fa-chevron-up');
+        });
+
+        $('#submenuDatabase').on('hide.bs.collapse', function() {
+            $(this).prev('.nav-link').find('.toggle-arrow')
+                .removeClass('fa-chevron-up')
+                .addClass('fa-chevron-down');
+        });
+    });
+</script>
+
 
 </body>
 
