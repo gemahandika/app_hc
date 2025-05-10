@@ -18,8 +18,10 @@ if (!empty($filter_gen)) {
     $query .= " AND gen = '" . mysqli_real_escape_string($koneksi, $filter_gen) . "'";
 }
 if (!empty($filter_usia)) {
-    $query .= " AND usia = '" . mysqli_real_escape_string($koneksi, $filter_usia) . "'";
+    $filter_usia = mysqli_real_escape_string($koneksi, $filter_usia);
+    $query .= " AND usia LIKE '{$filter_usia} TAHUN%'";
 }
+
 $query .= " ORDER BY id_karyawan DESC";
 
 $result = mysqli_query($koneksi, $query);
