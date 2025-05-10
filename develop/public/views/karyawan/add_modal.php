@@ -20,8 +20,8 @@ $time = date("H:i");
                     <div class="row">
 
                         <div class="col-md-4 mb-3">
-                            <label for="kategori" class="form-label"><b>KATEGORI</b></label>
-                            <select class="form-select form-control" id="kategori" name="kategori">
+                            <label for="kategori" class="form-label"><b>KATEGORI</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="kategori" name="kategori" required>
                                 <option value="">-- Pilih Kategori --</option>
                                 <option value="MES 1">MES 1</option>
                                 <option value="MES 2">MES 2</option>
@@ -29,8 +29,8 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="branch" class="form-label"><b>BRANCH</b></label>
-                            <select class="form-select form-control" id="branch" name="branch">
+                            <label for="branch" class="form-label"><b>BRANCH</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="branch" name="branch" required>
                                 <option value="">-- Pilih Cabang --</option>
                                 <?php while ($row = mysqli_fetch_assoc($queryCabang)) { ?>
                                     <option value="<?= $row['nama_cabang']; ?>" data-nama="<?= $row['nama_cabang']; ?>">
@@ -41,8 +41,8 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="kcu_agen" class="form-label"><b>KCU / AGEN</b></label>
-                            <select class="form-select form-control" id="kcu_agen" name="kcu_agen">
+                            <label for="kcu_agen" class="form-label"><b>KCU / AGEN</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="kcu_agen" name="kcu_agen" required>
                                 <option value="">-- Pilih kcu / agen --</option>
                                 <option value="KCU">KCU</option>
                                 <option value="AGEN">AGEN</option>
@@ -60,13 +60,13 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="nama_karyawan" class="form-label"><b>NAMA KARYAWAN</b></label>
-                            <input type="text" class="form-control" id="nama_karyawan" name="nama_karyawan">
+                            <label for="nama_karyawan" class="form-label"><b>NAMA KARYAWAN</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="nama_karyawan" name="nama_karyawan" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="vendor" class="form-label"><b>VENDOR</b></label>
-                            <select class="form-select form-control" id="vendor" name="vendor">
+                            <label for="vendor" class="form-label"><b>VENDOR</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="vendor" name="vendor" required>
                                 <option value="">-- Pilih Vendor --</option>
                                 <option value="JNE">JNE</option>
                                 <option value="SOS">SOS</option>
@@ -75,8 +75,8 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="phone" class="form-label"><b>NO. HANDPHONE</b></label>
-                            <input type="text" class="form-control" id="phone" name="phone">
+                            <label for="phone" class="form-label"><b>NO. HANDPHONE</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
@@ -85,8 +85,8 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="join_date" class="form-label"><b>JOIN DATE</b></label>
-                            <input type="date" class="form-control" id="join_date" name="join_date" value="<?= $date; ?>">
+                            <label for="join_date" class="form-label"><b>JOIN DATE</b> <b class="text-danger">*</b></label>
+                            <input type="date" class="form-control" id="join_date" name="join_date" value="<?= $date; ?>" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
@@ -95,8 +95,8 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="status_karyawan" class="form-label"><b>STATUS KARYAWAN</b></label>
-                            <select class="form-select form-control" id="status_karyawan" name="status_karyawan">
+                            <label for="status_karyawan" class="form-label"><b>STATUS KARYAWAN</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="status_karyawan" name="status_karyawan" required>
                                 <option value="">-- Pilih Status Karyawan --</option>
                                 <option value="PKWTT">PKWTT</option>
                                 <option value="PKWT">PKWT</option>
@@ -106,8 +106,8 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="jabatan" class="form-label"><b>JABATAN</b></label>
-                            <select class="form-select form-control" id="jabatan" name="jabatan">
+                            <label for="jabatan" class="form-label"><b>JABATAN</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="jabatan" name="jabatan" required>
                                 <option value="">-- Pilih Jabatan --</option>
                                 <option value="STAFF">STAFF</option>
                                 <option value="PIC">PIC</option>
@@ -120,18 +120,25 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="posisi" class="form-label"><b>POSISI</b></label>
-                            <input type="text" class="form-control" id="posisi" name="posisi">
+                            <label for="posisi" class="form-label"><b>POSISI</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="posisi" name="posisi" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="unit" class="form-label"><b>UNIT</b></label>
-                            <input type="text" class="form-control" id="unit" name="unit">
+                            <label for="unit" class="form-label"><b>UNIT</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="unit" name="unit" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="birth_date" class="form-label"><b>BIRTH DATE</b></label>
-                            <input type="date" class="form-control" id="birth_date" name="birth_date">
+                            <label for="section" class="form-label"><b>SECTION</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="section" name="section" required>
+                                <option value="">-- Pilih section --</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="birth_date" class="form-label"><b>BIRTH DATE</b> <b class="text-danger">*</b></label>
+                            <input type="date" class="form-control" id="birth_date" name="birth_date" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
@@ -140,13 +147,13 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="gen" class="form-label"><b>GEN</b></label>
-                            <input type="text" class="form-control" id="gen" name="gen">
+                            <label for="gen" class="form-label"><b>GEN</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="gen" name="gen" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="gender" class="form-label"><b>GENDER</b></label>
-                            <select class="form-select form-control" id="gender" name="gender">
+                            <label for="gender" class="form-label"><b>GENDER</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="gender" name="gender" required>
                                 <option value="">-- Pilih Gender --</option>
                                 <option value="LAKI-LAKI">LAKI-LAKI</option>
                                 <option value="PEREMPUAN">PEREMPUAN</option>
@@ -154,15 +161,18 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="lokasi_kerja" class="form-label"><b>LOKASI KERJA</b></label>
-                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja">
+                            <label for="lokasi_kerja" class="form-label"><b>LOKASI KERJA</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="lokasi_kerja" name="lokasi_kerja" required>
+                                <option value="">-- Pilih Lokasi Kerja --</option>
+                            </select>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="pendidikan_terakhir" class="form-label"><b>PENDIDIKAN TERAKHIR</b></label>
-                            <select class="form-select form-control" id="pendidikan_terakhir" name="pendidikan_terakhir">
+                            <label for="pendidikan_terakhir" class="form-label"><b>PENDIDIKAN TERAKHIR</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="pendidikan_terakhir" name="pendidikan_terakhir" required>
                                 <option value="">-- Pilih Pendidikan --</option>
                                 <option value="SMA">SMA</option>
+                                <option value="D3">D1</option>
                                 <option value="D3">D3</option>
                                 <option value="S1">S1</option>
                                 <option value="S2">S2</option>
@@ -171,18 +181,18 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="jurusan" class="form-label"><b>JURUSAN</b></label>
-                            <input type="text" class="form-control" id="jurusan" name="jurusan">
+                            <label for="jurusan" class="form-label"><b>JURUSAN</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="jurusan" name="jurusan" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="alamat" class="form-label"><b>ALAMAT</b></label>
-                            <input type="text" class="form-control" id="alamat" name="alamat">
+                            <label for="alamat" class="form-label"><b>ALAMAT</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="alamat" name="alamat" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="kecamatan" class="form-label"><b>KECAMATAN</b></label>
-                            <input type="text" class="form-control" id="kecamatan" name="kecamatan">
+                            <label for="kecamatan" class="form-label"><b>KECAMATAN</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
@@ -201,13 +211,13 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="status_pekerjaan" class="form-label"><b>STATUS PEKERJAAN</b></label>
-                            <input type="text" class="form-control" id="status_pekerjaan" name="status_pekerjaan">
+                            <label for="status_pekerjaan" class="form-label"><b>STATUS PEKERJAAN</b> <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="status_pekerjaan" name="status_pekerjaan" required>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="status_pernikahan" class="form-label"><b>STATUS PERNIKAHAN</b></label>
-                            <select class="form-select form-control" id="status_pernikahan" name="status_pernikahan">
+                            <label for="status_pernikahan" class="form-label"><b>STATUS PERNIKAHAN</b> <b class="text-danger">*</b></label>
+                            <select class="form-select form-control" id="status_pernikahan" name="status_pernikahan" required>
                                 <option value="">-- Pilih Pendidikan --</option>
                                 <option value="MENIKAH">MENIKAH</option>
                                 <option value="BELUM MENIKAH">BELUM MENIKAH</option>

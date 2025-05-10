@@ -21,8 +21,8 @@ include 'add_modal.php';
                         Syncrone Data
                     </button>
                     <a href="export_karyawan.php" class="btn btn-success btn-sm">Download Data</a>
+                    <a href="bulk_insert_karyawan.php" class="btn btn-warning btn-sm text-primary"> Upload Data</a>
                     <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
-                        <a href="bulk_insert_karyawan.php" class="btn btn-warning btn-sm text-primary"> Upload Data</a>
                         <a href="bulk_update_karyawan.php" class="btn btn-primary btn-sm text-white">Update Data</a>
                     <?php } ?>
                 </div>
@@ -48,6 +48,7 @@ include 'add_modal.php';
                             <th style="font-size: 0.75rem;">JABATAN</th>
                             <th style="font-size: 0.75rem;">POSISI</th>
                             <th style="font-size: 0.75rem;">UNIT</th>
+                            <th style="font-size: 0.75rem;">SECTION</th>
                             <th style="font-size: 0.75rem;">BIRTHDATE</th>
                             <th style="font-size: 0.75rem;">USIA</th>
                             <th style="font-size: 0.75rem;">GEN</th>
@@ -121,6 +122,7 @@ include 'add_modal.php';
                             <th class="kecil-normal"><?= $data['jabatan'] ?></th>
                             <th class="kecil-normal"><?= $data['posisi'] ?></th>
                             <th class="kecil-normal"><?= $data['unit'] ?></th>
+                            <th class="kecil-normal"><?= $data['section'] ?></th>
                             <th class="kecil-normal"><?= $data['birth_date'] ?></th>
                             <th class="kecil-normal"><?= $data['usia'] ?></th>
                             <th class="kecil-normal"><?= $data['gen'] ?></th>

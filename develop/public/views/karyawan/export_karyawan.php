@@ -26,6 +26,7 @@ $headers = [
     'JABATAN',
     'POSISI',
     'UNIT',
+    'SECTION',
     'BIRTHDATE',
     'USIA',
     'GEN',
@@ -39,7 +40,16 @@ $headers = [
     'BPJS KETENAGAKERJAAN',
     'NAMA CV/PERUSAHAAN MITRA',
     'STATUS PEKERJAAN',
-    'STATUS PERNIKAHAN'
+    'STATUS PERNIKAHAN',
+    'KET INDUCTION',
+    'SERVICE BY HEART',
+    'CODE OF CONDUCT',
+    'CREAT VISION, MISSION,TARGET & STRATGY OF LIFE',
+    'TRAINING PROFESI SCO',
+    'TRAINING PROFESI SALES',
+    'JSC (KURIR DEV PROGRAM)',
+    'ID CARD',
+    'SERAGAM'
 ];
 
 $sheet->fromArray($headers, null, 'A1');
@@ -66,20 +76,31 @@ while ($data = mysqli_fetch_assoc($sql)) {
     $sheet->setCellValue('N' . $row, $data['jabatan']);
     $sheet->setCellValue('O' . $row, $data['posisi']);
     $sheet->setCellValue('P' . $row, $data['unit']);
-    $sheet->setCellValue('Q' . $row, $data['birth_date']);
-    $sheet->setCellValue('R' . $row, $data['usia']);
-    $sheet->setCellValue('S' . $row, $data['gen']);
-    $sheet->setCellValue('T' . $row, $data['gender']);
-    $sheet->setCellValue('U' . $row, $data['lokasi_kerja']);
-    $sheet->setCellValue('V' . $row, $data['pendidikan_terakhir']);
-    $sheet->setCellValue('W' . $row, $data['jurusan']);
-    $sheet->setCellValue('X' . $row, $data['alamat']);
-    $sheet->setCellValue('Y' . $row, $data['kecamatan']);
-    $sheet->setCellValue('Z' . $row, $data['bpjs_kesehatan']);
-    $sheet->setCellValue('AA' . $row, $data['bpjs_ketenagakerjaan']);
-    $sheet->setCellValue('AB' . $row, $data['perusahaan_mitra']);
-    $sheet->setCellValue('AC' . $row, $data['status_pekerjaan']);
-    $sheet->setCellValue('AD' . $row, $data['status_pernikahan']);
+    $sheet->setCellValue('Q' . $row, $data['section']);
+    $sheet->setCellValue('R' . $row, $data['birth_date']);
+    $sheet->setCellValue('S' . $row, $data['usia']);
+    $sheet->setCellValue('T' . $row, $data['gen']);
+    $sheet->setCellValue('U' . $row, $data['gender']);
+    $sheet->setCellValue('V' . $row, $data['lokasi_kerja']);
+    $sheet->setCellValue('W' . $row, $data['pendidikan_terakhir']);
+    $sheet->setCellValue('X' . $row, $data['jurusan']);
+    $sheet->setCellValue('Y' . $row, $data['alamat']);
+    $sheet->setCellValue('Z' . $row, $data['kecamatan']);
+    $sheet->setCellValue('AA' . $row, $data['bpjs_kesehatan']);
+    $sheet->setCellValue('AB' . $row, $data['bpjs_ketenagakerjaan']);
+    $sheet->setCellValue('AC' . $row, $data['perusahaan_mitra']);
+    $sheet->setCellValue('AD' . $row, $data['status_pekerjaan']);
+    $sheet->setCellValue('AE' . $row, $data['status_pernikahan']);
+
+    $sheet->setCellValue('AF' . $row, $data['ket_induction']);
+    $sheet->setCellValue('AG' . $row, $data['service_byheart']);
+    $sheet->setCellValue('AH' . $row, $data['code_ofconduct']);
+    $sheet->setCellValue('AI' . $row, $data['visimisi_oflife']);
+    $sheet->setCellValue('AJ' . $row, $data['training_sco']);
+    $sheet->setCellValue('AK' . $row, $data['training_sales']);
+    $sheet->setCellValue('AL' . $row, $data['kurir_program']);
+    $sheet->setCellValue('AM' . $row, $data['id_card']);
+    $sheet->setCellValue('AN' . $row, $data['seragam']);
     $row++;
 }
 
