@@ -20,7 +20,7 @@
         // Inisialisasi Select2
         $('.select2').select2({
             width: '100%',
-            // placeholder: '-- Pilih Data --',
+            placeholder: '-- Pilih Data --',
             allowClear: true
         });
     });
