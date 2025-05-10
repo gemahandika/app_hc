@@ -46,6 +46,7 @@ $time = date("H:i");
                                 <option value="">-- Pilih kcu / agen --</option>
                                 <option value="KCU">KCU</option>
                                 <option value="AGEN">AGEN</option>
+                                <option value="MITRA">MITRA</option>
                             </select>
                         </div>
 
@@ -71,6 +72,7 @@ $time = date("H:i");
                                 <option value="JNE">JNE</option>
                                 <option value="SOS">SOS</option>
                                 <option value="PKSS">PKSS</option>
+                                <option value="LAINNYA">LAINNYA</option>
                             </select>
                         </div>
 
@@ -133,6 +135,7 @@ $time = date("H:i");
                             <label for="section" class="form-label"><b>SECTION</b> <b class="text-danger">*</b></label>
                             <select class="form-select form-control" id="section" name="section" required>
                                 <option value="">-- Pilih section --</option>
+                                <option value="LAINNYA">LAINNYA</option>
                             </select>
                         </div>
 
@@ -164,6 +167,7 @@ $time = date("H:i");
                             <label for="lokasi_kerja" class="form-label"><b>LOKASI KERJA</b> <b class="text-danger">*</b></label>
                             <select class="form-select form-control" id="lokasi_kerja" name="lokasi_kerja" required>
                                 <option value="">-- Pilih Lokasi Kerja --</option>
+                                <option value="LAINNYA">LAINNYA</option>
                             </select>
                         </div>
 

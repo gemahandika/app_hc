@@ -5,6 +5,12 @@ include '../../header.php';
 
 include 'modal_date.php';
 include 'add_modal.php';
+// Ambil opsi unik dari database
+$sectionOptions = mysqli_query($koneksi, "SELECT DISTINCT section FROM tb_karyawan WHERE status_resign = 'NO' AND section IS NOT NULL AND section != '' ORDER BY section");
+$genOptions     = mysqli_query($koneksi, "SELECT DISTINCT gen FROM tb_karyawan WHERE status_resign = 'NO' AND gen IS NOT NULL AND gen != '' ORDER BY gen");
+$usiaOptions    = mysqli_query($koneksi, "SELECT DISTINCT usia FROM tb_karyawan WHERE status_resign = 'NO' AND usia IS NOT NULL AND usia != '' ORDER BY usia");
+
+
 ?>
 
 <main>
@@ -12,7 +18,7 @@ include 'add_modal.php';
         <h3 class="mt-4" style="border-bottom: 1px solid black;">Data Karyawan</h3>
         <div class="card mb-4 mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">
+                <button type="button" class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">
                     + Tambah Karyawan
                 </button>
 
@@ -20,6 +26,8 @@ include 'add_modal.php';
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg1">
                         Syncrone Data
                     </button>
+                    <a href="export_karyawan_filter.php?filter_section=<?= $_GET['filter_section'] ?? '' ?>&filter_gen=<?= $_GET['filter_gen'] ?? '' ?>&filter_usia=<?= $_GET['filter_usia'] ?? '' ?>" class="btn btn-success btn-sm">Download Filter</a>
+
                     <a href="export_karyawan.php" class="btn btn-success btn-sm">Download Data</a>
                     <a href="bulk_insert_karyawan.php" class="btn btn-warning btn-sm text-primary"> Upload Data</a>
                     <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
@@ -27,6 +35,52 @@ include 'add_modal.php';
                     <?php } ?>
                 </div>
             </div>
+
+            <form method="GET" action="" class="row card-header g-3 mb-2 gap-2">
+                <div class="col-md-3">
+                    <label for="filter_section" class="form-label">Filter Section</label>
+                    <select class="form-select select2" id="filter_section" name="filter_section">
+                        <option value="">-- Pilih section --</option>
+                        <?php while ($row = mysqli_fetch_assoc($sectionOptions)) : ?>
+                            <option value="<?= $row['section'] ?>" <?= (isset($_GET['filter_section']) && $_GET['filter_section'] == $row['section']) ? 'selected' : '' ?>>
+                                <?= $row['section'] ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+                    <label for="filter_gen" class="form-label">Filter Gen</label>
+                    <select class="form-select select2" id="filter_gen" name="filter_gen">
+                        <option value="">-- Pilih GEN --</option>
+                        <?php while ($row = mysqli_fetch_assoc($genOptions)) : ?>
+                            <option value="<?= $row['gen'] ?>" <?= (isset($_GET['filter_gen']) && $_GET['filter_gen'] == $row['gen']) ? 'selected' : '' ?>>
+                                <?= $row['gen'] ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="filter_usia" class="form-label">Filter Usia</label>
+                    <select class="form-select select2" id="filter_usia" name="filter_usia">
+                        <option value="">-- Pilih USIA --</option>
+                        <?php while ($row = mysqli_fetch_assoc($usiaOptions)) : ?>
+                            <option value="<?= $row['usia'] ?>" <?= (isset($_GET['filter_usia']) && $_GET['filter_usia'] == $row['usia']) ? 'selected' : '' ?>>
+                                <?= $row['usia'] ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+
+                <div class="col-md-2 align-self-end">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="index.php" class="btn btn-secondary">Reset</a>
+                </div>
+            </form>
+
+
             <div class="card-body">
                 <table id="example" class="display" style="width:100%">
                     <thead>
@@ -76,7 +130,26 @@ include 'add_modal.php';
                     </thead>
                     <?php
                     $no = 0;
-                    $sql = mysqli_query($koneksi, "SELECT * FROM tb_karyawan WHERE status_resign = 'NO' ORDER BY id_karyawan DESC") or die(mysqli_error($koneksi));
+                    $filter_section = isset($_GET['filter_section']) ? $_GET['filter_section'] : '';
+                    $filter_gen     = isset($_GET['filter_gen']) ? $_GET['filter_gen'] : '';
+                    $filter_usia    = isset($_GET['filter_usia']) ? $_GET['filter_usia'] : '';
+
+                    $query = "SELECT * FROM tb_karyawan WHERE status_resign = 'NO'";
+
+                    // Tambahkan filter jika diisi
+                    if (!empty($filter_section)) {
+                        $query .= " AND section = '" . mysqli_real_escape_string($koneksi, $filter_section) . "'";
+                    }
+                    if (!empty($filter_gen)) {
+                        $query .= " AND gen = '" . mysqli_real_escape_string($koneksi, $filter_gen) . "'";
+                    }
+                    if (!empty($filter_usia)) {
+                        $query .= " AND usia = '" . mysqli_real_escape_string($koneksi, $filter_usia) . "'";
+                    }
+
+                    $query .= " ORDER BY id_karyawan DESC";
+
+                    $sql = mysqli_query($koneksi, $query) or die(mysqli_error($koneksi));
                     $result = array();
                     while ($data = mysqli_fetch_array($sql)) {
                         $result[] = $data;
@@ -160,36 +233,14 @@ include 'add_modal.php';
                 </div>
 
                 <!-- jQuery harus ada -->
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                <script>
-                    $(document).on('click', '.openModalButton', function() {
-                        var id_karyawan = $(this).data('id_karyawan');
-                        var mode = $(this).data('mode');
-
-                        // console.log("ID:", id_karyawan, "Mode:", mode); // cek di console
-
-                        $.ajax({
-                            url: 'edit_modal.php',
-                            type: 'GET',
-                            data: {
-                                id_karyawan: id_karyawan,
-                                mode: mode
-                            },
-                            success: function(response) {
-                                $('#modalEditContent').html(response);
-                            },
-                            error: function(xhr, status, error) {
-                                console.log("AJAX Error: " + xhr.responseText);
-                            }
-                        });
-                    });
-                </script>
 
             </div>
         </div>
     </div>
 </main>
+
+
 
 <?php
 include '../../footer.php';

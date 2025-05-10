@@ -61,6 +61,7 @@ $time = date("H:i");
         $link_total_karyawan = "../karyawan/detail_karyawan.php?start_date=$start_date&end_date=$end_date&branch=$branch";
         $link_karyawan_kcu = "../karyawan/detail_karyawan.php?start_date=$start_date&end_date=$end_date&branch=$branch&type=kcu";
         $link_karyawan_agen = "../karyawan/detail_karyawan.php?start_date=$start_date&end_date=$end_date&branch=$branch&type=agen";
+        $link_karyawan_mitra = "../karyawan/detail_karyawan.php?start_date=$start_date&end_date=$end_date&branch=$branch&type=mitra";
         $link_karyawan_resign = "../karyawan_resign/detail_karyawan.php?start_date=$start_date&end_date=$end_date&branch=$branch&resign=YES";
         ?>
 
@@ -80,7 +81,7 @@ $time = date("H:i");
             <div class="col-xl-3 col-md-6">
                 <a href="<?= $link_karyawan_kcu ?>" class="text-decoration-none">
                     <div class="card bg-info text-white mb-4">
-                        <div class="card-body">Karyawan KCU</div>
+                        <div class="card-body">Karyawan Kcu</div>
                         <div class="card-footer d-flex justify-content-between align-items-center px-4">
                             <i class="fas fa-users fa-2x"></i>
                             <h1 class="mb-0"><?= $total_kcu; ?></h1>
@@ -92,10 +93,22 @@ $time = date("H:i");
             <div class="col-xl-3 col-md-6">
                 <a href="<?= $link_karyawan_agen ?>" class="text-decoration-none">
                     <div class="card bg-success text-white mb-4">
-                        <div class="card-body">Karyawan AGEN</div>
+                        <div class="card-body">Karyawan Agen</div>
                         <div class="card-footer d-flex justify-content-between align-items-center px-4">
                             <i class="fas fa-users fa-2x"></i>
                             <h1 class="mb-0"><?= $total_agen; ?></h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <a href="<?= $link_karyawan_mitra ?>" class="text-decoration-none">
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body">Karyawan Mitra</div>
+                        <div class="card-footer d-flex justify-content-between align-items-center px-4">
+                            <i class="fas fa-users fa-2x"></i>
+                            <h1 class="mb-0"><?= $total_mitra; ?></h1>
                         </div>
                     </div>
                 </a>
@@ -112,7 +125,8 @@ $time = date("H:i");
                     </div>
                 </a>
             </div>
-
+        </div>
+        <div class="row">
             <div class="col-lg-6">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -157,14 +171,16 @@ $time = date("H:i");
     document.addEventListener('DOMContentLoaded', function() {
         const totalKcu = <?= $total_kcu ?>;
         const totalAgen = <?= $total_agen ?>;
+        const totalMitra = <?= $total_mitra ?>;
 
 
-        const values = [totalKcu, totalAgen];
+        const values = [totalKcu, totalAgen, totalMitra];
         const total = values.reduce((a, b) => a + b, 0);
 
         const labels = [
             `KARYAWAN KCU (${totalKcu}) - ${((totalKcu / total) * 100).toFixed(1)}%`,
-            `KARYAWAN AGEN (${totalAgen}) - ${((totalAgen / total) * 100).toFixed(1)}%`
+            `KARYAWAN AGEN (${totalAgen}) - ${((totalAgen / total) * 100).toFixed(1)}%`,
+            `KARYAWAN MITRA (${totalMitra}) - ${((totalMitra / total) * 100).toFixed(1)}%`
 
         ];
 
@@ -175,8 +191,8 @@ $time = date("H:i");
                 labels: labels,
                 datasets: [{
                     data: values,
-                    backgroundColor: ['#17a2b8 ', '#28a745'],
-                    hoverBackgroundColor: ['#0b8fa1 ', '#1e7e34'],
+                    backgroundColor: ['#17a2b8 ', '#28a745', '#ffc107'],
+                    hoverBackgroundColor: ['#0b8fa1 ', '#1e7e34', '#e0a800'],
                     borderWidth: 1
                 }]
             },

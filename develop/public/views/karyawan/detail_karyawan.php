@@ -33,6 +33,10 @@ if ($type === 'agen') {
     $where .= " AND kcu_agen = '$type'";
 }
 
+if ($type === 'mitra') {
+    $where .= " AND kcu_agen = '$type'";
+}
+
 if ($resign === 'YES') {
     $where .= " AND status_resign = '$resign'";
 }

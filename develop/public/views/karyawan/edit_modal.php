@@ -48,6 +48,7 @@ if (isset($_GET['id_karyawan']) && isset($_GET['mode'])) {
                             <option value="<?= $data['kcu_agen']; ?>"><?= $data['kcu_agen']; ?></option>
                             <option value="KCU">KCU</option>
                             <option value="AGEN">AGEN</option>
+                            <option value="MITRA">MITRA</option>
                         </select>
                     </div>
 
@@ -120,6 +121,13 @@ if (isset($_GET['id_karyawan']) && isset($_GET['mode'])) {
                     <div class="col-md-4 mb-3">
                         <label for="unit" class="form-label"><b>UNIT</b></label>
                         <input type="text" class="form-control" id="unit" name="unit" value="<?= $data['unit']; ?>">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="section" class="form-label"><b>SECTION</b></label>
+                        <select class="form-select form-control" id="section" name="section">
+                            <option value="<?= $data['section']; ?>"><?= $data['section']; ?></option>
+                        </select>
                     </div>
 
                     <div class="col-md-4 mb-3">

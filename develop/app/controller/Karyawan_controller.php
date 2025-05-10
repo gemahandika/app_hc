@@ -14,6 +14,7 @@ if (isset($_POST['add_karyawan'])) {
     $nik_vendor = trim($_POST['nik_vendor']);
     $nama_karyawan = trim($_POST['nama_karyawan']);
     $vendor = trim($_POST['vendor']);
+    $phone = trim($_POST['phone']);
     $id_finger = trim($_POST['id_finger']);
     $join_date = trim($_POST['join_date']);
     $masa_kerja = trim($_POST['masa_kerja']);
@@ -48,7 +49,7 @@ if (isset($_POST['add_karyawan'])) {
     $seragam = trim($_POST['seragam']);
 
     $stmt = $koneksi->prepare("INSERT INTO tb_karyawan (
-        kategori, branch, kcu_agen, nik_jne, nik_vendor, nama_karyawan, vendor, id_finger, join_date, masa_kerja, status_karyawan,
+        kategori, branch, kcu_agen, nik_jne, nik_vendor, nama_karyawan, vendor, phone, id_finger, join_date, masa_kerja, status_karyawan,
         jabatan, posisi, unit, section, birth_date, usia, gen, gender, lokasi_kerja, pendidikan_terakhir, jurusan, alamat,
         kecamatan, bpjs_kesehatan, bpjs_ketenagakerjaan, perusahaan_mitra, status_pekerjaan, status_pernikahan, status_resign,
         ket_induction, service_byheart, code_ofconduct, training_sales, training_sco, visimisi_oflife,
@@ -56,7 +57,7 @@ if (isset($_POST['add_karyawan'])) {
     ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
     $stmt->bind_param(
-        "sssssssssssssssssssssssssssssssssssssss",
+        "ssssssssssssssssssssssssssssssssssssssss",
         $kategori,
         $branch,
         $kcu_agen,
@@ -64,6 +65,7 @@ if (isset($_POST['add_karyawan'])) {
         $nik_vendor,
         $nama_karyawan,
         $vendor,
+        $phone,
         $id_finger,
         $join_date,
         $masa_kerja,
@@ -114,6 +116,7 @@ if (isset($_POST['add_karyawan'])) {
     $nik_vendor = trim($_POST['nik_vendor']);
     $nama_karyawan = trim($_POST['nama_karyawan']);
     $vendor = trim($_POST['vendor']);
+    $phone = trim($_POST['phone']);
     $id_finger = trim($_POST['id_finger']);
     $join_date = trim($_POST['join_date']);
     $masa_kerja = trim($_POST['masa_kerja']);
@@ -148,7 +151,7 @@ if (isset($_POST['add_karyawan'])) {
 
     // Query update
     $stmt = $koneksi->prepare("UPDATE tb_karyawan SET
-        kategori = ?, branch = ?, kcu_agen = ?, nik_jne = ?, nik_vendor = ?, nama_karyawan = ?, vendor = ?, id_finger = ?, join_date = ?, masa_kerja = ?, status_karyawan = ?,
+        kategori = ?, branch = ?, kcu_agen = ?, nik_jne = ?, nik_vendor = ?, nama_karyawan = ?, vendor = ?, phone = ?, id_finger = ?, join_date = ?, masa_kerja = ?, status_karyawan = ?,
         jabatan = ?, posisi = ?, unit = ?, section = ?, birth_date = ?, usia = ?, gen = ?, gender = ?, lokasi_kerja = ?, pendidikan_terakhir = ?, jurusan = ?, alamat = ?,
         kecamatan = ?, bpjs_kesehatan = ?, bpjs_ketenagakerjaan = ?, perusahaan_mitra = ?, status_pekerjaan = ?, status_pernikahan = ?,
         ket_induction = ?, service_byheart = ?, code_ofconduct = ?, training_sales = ?, training_sco = ?, visimisi_oflife = ?,
@@ -156,7 +159,7 @@ if (isset($_POST['add_karyawan'])) {
         WHERE id_karyawan = ?");
 
     $stmt->bind_param(
-        "ssssssssssssssssssssssssssssssssssssssi",
+        "sssssssssssssssssssssssssssssssssssssssi",
         $kategori,
         $branch,
         $kcu_agen,
@@ -164,6 +167,7 @@ if (isset($_POST['add_karyawan'])) {
         $nik_vendor,
         $nama_karyawan,
         $vendor,
+        $phone,
         $id_finger,
         $join_date,
         $masa_kerja,

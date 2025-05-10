@@ -63,6 +63,7 @@ $branch = isset($_GET['branch']) ? $_GET['branch'] : null;
 $total_karyawan = countKaryawan($koneksi, buildConditions('NO', [], $branch));
 $total_agen     = countKaryawan($koneksi, buildConditions('NO', ["kcu_agen = 'AGEN'"], $branch));
 $total_kcu      = countKaryawan($koneksi, buildConditions('NO', ["kcu_agen = 'KCU'"], $branch));
+$total_mitra      = countKaryawan($koneksi, buildConditions('NO', ["kcu_agen = 'MITRA'"], $branch));
 $total_resign   = countKaryawan($koneksi, buildConditions('YES', [], $branch));
 
 
