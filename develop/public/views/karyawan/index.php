@@ -38,7 +38,7 @@ $usiaOptions    = mysqli_query($koneksi, "SELECT DISTINCT usia FROM tb_karyawan 
                 <div class="col-md-3">
                     <label for="filter_section" class="form-label">Filter Section</label>
                     <select class="form-select select2" id="filter_section" name="filter_section">
-                        <option value="">-- Pilih section --</option>
+                        <option value="">-- Pilih Section --</option>
                         <?php while ($row = mysqli_fetch_assoc($sectionOptions)) : ?>
                             <option value="<?= $row['section'] ?>" <?= (isset($_GET['filter_section']) && $_GET['filter_section'] == $row['section']) ? 'selected' : '' ?>>
                                 <?= $row['section'] ?>
@@ -51,7 +51,7 @@ $usiaOptions    = mysqli_query($koneksi, "SELECT DISTINCT usia FROM tb_karyawan 
                 <div class="col-md-3">
                     <label for="filter_gen" class="form-label">Filter Gen</label>
                     <select class="form-select select2" id="filter_gen" name="filter_gen">
-                        <option value="">-- Pilih GEN --</option>
+                        <option value="">-- Pilih Gen --</option>
                         <?php while ($row = mysqli_fetch_assoc($genOptions)) : ?>
                             <option value="<?= $row['gen'] ?>" <?= (isset($_GET['filter_gen']) && $_GET['filter_gen'] == $row['gen']) ? 'selected' : '' ?>>
                                 <?= $row['gen'] ?>
@@ -63,7 +63,7 @@ $usiaOptions    = mysqli_query($koneksi, "SELECT DISTINCT usia FROM tb_karyawan 
                 <div class="col-md-3">
                     <label for="filter_usia" class="form-label">Filter Usia</label>
                     <select class="form-select select2" id="filter_usia" name="filter_usia">
-                        <option value="">-- Pilih USIA --</option>
+                        <option value="">-- Pilih Usia --</option>
                         <?php
                         // Ambil ulang pointer data jika sudah dibaca sebelumnya
                         mysqli_data_seek($usiaOptions, 0);
