@@ -66,13 +66,28 @@ $usiaOptions    = mysqli_query($koneksi, "SELECT DISTINCT usia FROM tb_karyawan 
                     <label for="filter_usia" class="form-label">Filter Usia</label>
                     <select class="form-select select2" id="filter_usia" name="filter_usia">
                         <option value="">-- Pilih USIA --</option>
-                        <?php while ($row = mysqli_fetch_assoc($usiaOptions)) : ?>
-                            <option value="<?= $row['usia'] ?>" <?= (isset($_GET['filter_usia']) && $_GET['filter_usia'] == $row['usia']) ? 'selected' : '' ?>>
-                                <?= $row['usia'] ?>
-                            </option>
-                        <?php endwhile; ?>
+                        <?php
+                        // Ambil ulang pointer data jika sudah dibaca sebelumnya
+                        mysqli_data_seek($usiaOptions, 0);
+
+                        $tahun_unik = [];
+
+                        while ($row = mysqli_fetch_assoc($usiaOptions)) {
+                            // Contoh isi $row['usia'] = "18 TAHUN 11 BULAN"
+                            if (preg_match('/^(\d+)\s*TAHUN/', strtoupper($row['usia']), $matches)) {
+                                $tahun = $matches[1];
+                                if (!in_array($tahun, $tahun_unik)) {
+                                    $tahun_unik[] = $tahun;
+                                    $selected = (isset($_GET['filter_usia']) && $_GET['filter_usia'] == $tahun) ? 'selected' : '';
+                                    echo "<option value=\"$tahun\" $selected>$tahun TAHUN</option>";
+                                }
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
+
+
 
                 <div class="col-md-2 align-self-end">
                     <button type="submit" class="btn btn-primary">Filter</button>
@@ -144,8 +159,10 @@ $usiaOptions    = mysqli_query($koneksi, "SELECT DISTINCT usia FROM tb_karyawan 
                         $query .= " AND gen = '" . mysqli_real_escape_string($koneksi, $filter_gen) . "'";
                     }
                     if (!empty($filter_usia)) {
-                        $query .= " AND usia = '" . mysqli_real_escape_string($koneksi, $filter_usia) . "'";
+                        $filter_usia = mysqli_real_escape_string($koneksi, $filter_usia);
+                        $query .= " AND usia LIKE '{$filter_usia} TAHUN%'";
                     }
+
 
                     $query .= " ORDER BY id_karyawan DESC";
 
