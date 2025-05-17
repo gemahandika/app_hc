@@ -77,6 +77,30 @@
         });
     });
 </script>
+
+<script>
+    // Handler tombol buka modal
+    $(document).on('click', '.openModalButtonSection', function() {
+        var id_section = $(this).data('id_section');
+        var mode = $(this).data('mode');
+
+        $.ajax({
+            url: 'edit_modal.php',
+            type: 'GET',
+            data: {
+                id_section: id_section,
+                mode: mode
+            },
+            success: function(response) {
+                $('#modalEditContent').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.log("AJAX Error: " + xhr.responseText);
+            }
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $('#submenuDatabase').on('show.bs.collapse', function() {

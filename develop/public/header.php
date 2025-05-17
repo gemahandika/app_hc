@@ -86,29 +86,31 @@ $status = $data1["status"];
                             <div class="sb-nav-link-icon"><i class="fas fa-user-times"></i></div>
                             Karyawan Resign
                         </a>
-                        <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#submenuDatabase" aria-expanded="false" aria-controls="submenuDatabase">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-database me-1"></i>
-                                </div>
-                                Setting Database
-                                <i class="fas fa-chevron-down ms-auto toggle-arrow"></i>
-                            </a>
 
-                            <div class="collapse" id="submenuDatabase">
-                                <ul class="sb-sidenav-menu-nested nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">- Data Section</a>
-                                    </li>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#submenuDatabase" aria-expanded="false" aria-controls="submenuDatabase">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-database me-1"></i>
+                            </div>
+                            Setting Database
+                            <i class="fas fa-chevron-down ms-auto toggle-arrow"></i>
+                        </a>
+
+                        <div class="collapse" id="submenuDatabase">
+                            <ul class="sb-sidenav-menu-nested nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../tb_section/index.php">- Data Section</a>
+                                </li>
+                                <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">- Data Unit</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">- Data Posisi</a>
                                     </li>
-                                </ul>
-                            </div>
-
+                                <?php } ?>
+                            </ul>
+                        </div>
+                        <?php if (in_array("super_admin", $_SESSION['admin_akses'])) { ?>
                             <a class="nav-link" href="../user_app/index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-gears"></i></div>
                                 User App

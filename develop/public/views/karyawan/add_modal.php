@@ -134,8 +134,16 @@ $time = date("H:i");
                         <div class="col-md-4 mb-3">
                             <label for="section" class="form-label"><b>SECTION</b> <b class="text-danger">*</b></label>
                             <select class="form-select form-control" id="section" name="section" required>
-                                <option value="">-- Pilih section --</option>
+                                <option value="">-- Pilih Section --</option>
+                                <?php
+                                $querySection = mysqli_query($koneksi, "SELECT nama_section FROM tb_section");
+                                while ($row_section = mysqli_fetch_assoc($querySection)) { ?>
+                                    <option value="<?= $row_section['nama_section']; ?>" data-nama="<?= $row_section['nama_section']; ?>">
+                                        <?= $row_section['nama_section']; ?>
+                                    </option>
+                                <?php } ?>
                                 <option value="LAINNYA">LAINNYA</option>
+                            </select>
                             </select>
                         </div>
 
