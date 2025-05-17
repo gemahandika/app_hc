@@ -20,6 +20,8 @@ include 'add_modal.php';
                         <tr class="bg-success text-white">
                             <th class="text-center">NO</th>
                             <th class="text-center">NAMA SECTION</th>
+                            <th class="text-center">UNIT</th>
+                            <th class="text-center">POSISI</th>
                             <th class="text-center">ACTION</th>
                         </tr>
                     </thead>
@@ -34,9 +36,11 @@ include 'add_modal.php';
                         $no++;
                     ?>
                         <tr>
-                            <th class="text-center"><?= $no ?></th>
-                            <th class="text-center"><?= $data['nama_section'] ?></th>
-                            <th class="text-center">
+                            <th class="text-center kecil-normal"><?= $no ?></th>
+                            <th class="text-center kecil-normal"><?= $data['nama_section'] ?></th>
+                            <th class="text-center kecil-normal"><?= $data['unit'] ?></th>
+                            <th class="text-center kecil-normal"><?= $data['posisi'] ?></th>
+                            <th class="text-center kecil-normal">
                                 <button
                                     type="button"
                                     class="btn btn-warning btn-sm me-2 text-white openModalButtonSection"

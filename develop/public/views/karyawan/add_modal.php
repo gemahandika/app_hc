@@ -122,30 +122,34 @@ $time = date("H:i");
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="posisi" class="form-label"><b>POSISI</b> <b class="text-danger">*</b></label>
-                            <input type="text" class="form-control" id="posisi" name="posisi" required>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label for="unit" class="form-label"><b>UNIT</b> <b class="text-danger">*</b></label>
-                            <input type="text" class="form-control" id="unit" name="unit" required>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
                             <label for="section" class="form-label"><b>SECTION</b> <b class="text-danger">*</b></label>
                             <select class="form-select form-control" id="section" name="section" required>
                                 <option value="">-- Pilih Section --</option>
                                 <?php
-                                $querySection = mysqli_query($koneksi, "SELECT nama_section FROM tb_section");
+                                $querySection = mysqli_query($koneksi, "SELECT DISTINCT nama_section FROM tb_section");
                                 while ($row_section = mysqli_fetch_assoc($querySection)) { ?>
-                                    <option value="<?= $row_section['nama_section']; ?>" data-nama="<?= $row_section['nama_section']; ?>">
+                                    <option value="<?= $row_section['nama_section']; ?>">
                                         <?= $row_section['nama_section']; ?>
                                     </option>
                                 <?php } ?>
                                 <option value="LAINNYA">LAINNYA</option>
                             </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="unit" class="form-label"><b>UNIT</b> <b class="text-danger">*</b></label>
+                            <select class="form-control" id="unit" name="unit" required>
+                                <option value="">-- Pilih Unit --</option>
                             </select>
                         </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="posisi" class="form-label"><b>POSISI</b> <b class="text-danger">*</b></label>
+                            <select class="form-control" id="posisi" name="posisi" required>
+                                <option value="">-- Pilih Posisi --</option>
+                            </select>
+                        </div>
+
 
                         <div class="col-md-4 mb-3">
                             <label for="birth_date" class="form-label"><b>BIRTH DATE</b> <b class="text-danger">*</b></label>
@@ -349,6 +353,50 @@ $time = date("H:i");
     // Terapkan ke join_date → masa_kerja dan birth_date → usia
     updateSelisihTanggal("join_date", "masa_kerja");
     updateSelisihTanggal("birth_date", "usia");
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#section').change(function() {
+            var section = $(this).val();
+            if (section != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '../../../app/models/getDropdown_models.php',
+                    data: {
+                        type: 'unit',
+                        section: section
+                    },
+                    success: function(html) {
+                        $('#unit').html(html);
+                        $('#posisi').html('<option value="">-- Pilih Posisi --</option>');
+                    }
+                });
+            } else {
+                $('#unit').html('<option value="">-- Pilih Unit --</option>');
+                $('#posisi').html('<option value="">-- Pilih Posisi --</option>');
+            }
+        });
+
+        $('#unit').change(function() {
+            var unit = $(this).val();
+            if (unit != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '../../../app/models/getDropdown_models.php',
+                    data: {
+                        type: 'posisi',
+                        unit: unit
+                    },
+                    success: function(html) {
+                        $('#posisi').html(html);
+                    }
+                });
+            } else {
+                $('#posisi').html('<option value="">-- Pilih Posisi --</option>');
+            }
+        });
+    });
 </script>
 
 

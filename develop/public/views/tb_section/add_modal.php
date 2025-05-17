@@ -15,8 +15,16 @@ $time = date("H:i");
                 <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label for="nama_section" class="form-label"><b>NAMA SECTION <span class="text-danger">*</span></b></label>
+                            <label for="section" class="form-label"><b>NAMA SECTION <span class="text-danger">*</span></b></label>
                             <input type="text" class="form-control" id="section" name="section" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="unit" class="form-label"><b>UNIT <span class="text-danger">*</span></b></label>
+                            <input type="text" class="form-control" id="unit" name="unit" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="posisi" class="form-label"><b>POSISI <span class="text-danger">*</span></b></label>
+                            <input type="text" class="form-control" id="posisi" name="posisi" required>
                         </div>
                     </div>
 
