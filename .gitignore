@@ -1,1 +1,3 @@
-develop/app/config/koneksi.php
+app/config
+public/.htaccess
+vendor
