@@ -1,9 +1,9 @@
 <?php
 
-class Resi_models
+class Karyawan_models
 {
 
-    private $table = 'tb_resi';
+    private $table = 'tb_karyawan';
     private $db;
 
     public function __construct()
@@ -11,10 +11,10 @@ class Resi_models
         $this->db = new Database;
     }
 
-    public function getReportByOpen()
+    public function getKaryawanByAktif()
     {
-        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE status = :status ORDER BY id_resi DESC');
-        $this->db->bind(':status', 'OPEN');
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE status_resign = :status_resign ORDER BY id_karyawan DESC');
+        $this->db->bind(':status_resign', 'NO');
         return $this->db->resultSet();
     }
 

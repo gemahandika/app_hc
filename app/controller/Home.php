@@ -25,12 +25,6 @@ class Home extends Controller
         $data['username'] = $username;
         $data['name'] = $name;
 
-        if ($userRole == 'agen') {
-            $data['open'] = $this->model('Resi_models')->getReportByUserId($username);
-        } else {
-            $data['open'] = $this->model('Resi_models')->getReportByOpen();
-        }
-
         $this->view('templates/header', $data);
         $this->view('home/index', $data);
         $this->view('templates/footer');

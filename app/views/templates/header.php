@@ -12,7 +12,7 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>App Cancel <?= $judul ?></title>
+    <title>App HC <?= $judul ?></title>
     <link rel="shortcut icon" href="<?= BASE_URL; ?>/img/JNE.png">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="<?= BASE_URL; ?>/css/style.css" rel="stylesheet" />
@@ -32,9 +32,9 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
 </head>
 
 <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-primary">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
         <a class="navbar-brand d-flex align-items-center gap-2 ps-3" href="#">
-            <span class="fs-8">App Cancel</span>
+            <span class="fs-8">Dashboard HC</span>
             <img src="<?= BASE_URL; ?>/img/JNE.png" alt="JNE Logo" style="height: 30px;">
         </a>
         <!-- Sidebar Toggle-->
@@ -65,8 +65,14 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
                     <div class="nav">
                         <span class="nav-link mb-4" style="border-bottom: solid 1px white;"><?= htmlspecialchars($name) ?></span>
                         <a class="nav-link" href="<?= BASE_URL; ?>">
-                            <div class="sb-nav-link-icon"><i class="fas fa-barcode"></i></div>
-                            Form Cancel
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="<?= BASE_URL; ?>/karyawan">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i>
+                            </div>
+                            Data Karyawan
                         </a>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
