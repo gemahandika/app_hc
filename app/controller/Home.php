@@ -16,117 +16,62 @@ class Home extends Controller
             exit;
         }
 
-        $data['judul'] = 'Home';
-        $userRole = $_SESSION['role'];
-        $username = $_SESSION['username'];
-        $name = $_SESSION['name'];
+        // Ambil filter dari form
+        $start  = $_GET['tgl_dari'] ?? null;
+        $end    = $_GET['tgl_ke'] ?? null;
+        $branch = $_GET['branch'] ?? null;
 
-        $data['userRole'] = $userRole;
-        $data['username'] = $username;
-        $data['name'] = $name;
+        $filterInfo = [];
+
+        if ($branch) {
+            $filterInfo[] = "Branch: <strong>$branch</strong>";
+        }
+
+        if ($start && $end) {
+            $tanggalLabel = date('d M Y', strtotime($start)) . " – " . date('d M Y', strtotime($end));
+            $filterInfo[] = "Tanggal: <strong>$tanggalLabel</strong>";
+        }
+
+        $data['filter_badge'] = $filterInfo
+            ? "🔎 Filter Aktif – " . implode(' | ', $filterInfo)
+            : null;
+
+        $model = $this->model('Karyawan_models');
+
+        // Daftar kategori kcu_agen dan key yang dipakai untuk $data[]
+        $kategoriList = [
+            'KCU' => 'jumlah_karyawan_kcu',
+            'AGEN KOTA MEDAN' => 'jumlah_karyawan_agen_medan',
+            'MITRA' => 'jumlah_karyawan_mitra',
+            'AGEN MES 2' => 'jumlah_karyawan_agen_mes2',
+            'AGEN MITRA CABANG' => 'jumlah_karyawan_agen_mitra_cabang',
+            'GERAI' => 'jumlah_karyawan_gerai',
+            'MITRA DELIVERY AGEN' => 'jumlah_karyawan_mitra_delivery_agen',
+            'MITRA DELIVERY CABANG' => 'jumlah_karyawan_mitra_delivery_cabang',
+        ];
+
+        // Loop seluruh kategori dan isi nilai ke $data[]
+        foreach ($kategoriList as $kcu_agen => $key) {
+            if ($branch) {
+                $data[$key] = $model->countByKcuAgenInBranch($branch, $kcu_agen, $start, $end)['total'];
+            } else {
+                $data[$key] = $model->countByKcuAgen($kcu_agen, $start, $end)['total'];
+            }
+        }
+
+        // Data lain
+        $data['jumlah_karyawan_aktif'] = 0;
+        foreach ($kategoriList as $kcu => $key) {
+            $data['jumlah_karyawan_aktif'] += $data[$key];
+        }
+        $data['branch_list'] = $model->getAllBranch();
+        $data['judul'] = 'Home';
+        $data['userRole'] = $_SESSION['role'];
+        $data['username'] = $_SESSION['username'];
+        $data['name'] = $_SESSION['name'];
 
         $this->view('templates/header', $data);
         $this->view('home/index', $data);
         $this->view('templates/footer');
-    }
-
-
-    public function tambah()
-    {
-        // Ambil langsung dari session
-        $_POST['user_id'] = $_SESSION['username']; // karena yang disimpan adalah $_SESSION['username']
-        $_POST['name'] = $_SESSION['name']; // sesuaikan jika ada
-
-        $result = $this->model('Resi_models')->tambahDataResi($_POST);
-
-        if ($result === 'duplicate') {
-            Flasher::setFlash('Opppss!!', 'Resi sudah pernah ditambahkan', 'error');
-            header('Location: ' . BASE_URL . '/home');
-            exit;
-        }
-
-        if ($result > 0) {
-            Flasher::setFlash('Resi Berhasil', 'ditambahkan', 'success');
-            header('Location: ' . BASE_URL . '/home');
-            exit;
-        } else {
-            Flasher::setFlash('Resi Gagal', 'ditambahkan', 'error');
-            header('Location: ' . BASE_URL . '/home');
-            exit;
-        }
-    }
-
-    public function edit()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = [
-                'id_resi' => $_POST['id_resi'],
-                'no_resi' => $_POST['no_resi'],
-                'keterangan' => $_POST['keterangan']
-            ];
-
-            $result = $this->model('Resi_models')->updateDataResi($data);
-            if ($result !== false) {
-                Flasher::setFlash('Resi Berhasil', 'diUpdate', 'success');
-                header('Location: ' . BASE_URL . '/home'); // sesuaikan route-nya
-                exit;
-            } else {
-                Flasher::setFlash('Gagal', 'diUpdate', 'error');
-                header('Location: ' . BASE_URL . '/home');
-                exit;
-            }
-        }
-    }
-
-    public function kirimEmail()
-    {
-
-
-        $report = $this->model('Resi_models')->getReportByOpen();
-
-        $isiEmail = "Dear Team IT Helpdesk:\n";
-        $isiEmail .= "Mohon Bantuannya Untuk Mencancel Resi Berikut Ini : \n\n";
-        foreach ($report as $item) {
-            $isiEmail .= "{$item['no_resi']}\n";
-        }
-        $isiEmail .= "\n";
-        $isiEmail .= "Dikarenakan Petugas Salah Entry \n\n";
-        $isiEmail .= "Terima Kasih \n";
-        $isiEmail .= "Gemasyah Handika\n";
-        $isiEmail .= "IT JNE MEDAN\n";
-        $mail = new PHPMailer(true);
-
-        try {
-            // Server SMTP Outlook atau Office365
-            $mail->isSMTP();
-            $mail->Host = 'smtp.office365.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = EMAIL_USER;  // dari config_email.php
-            $mail->Password = EMAIL_PASS;  // dari config_email.php
-            $mail->SMTPSecure = 'tls';
-            $mail->Port = 587;
-
-            $mail->setFrom('mes.it@jne.co.id', 'IT JNE MES');
-            $mail->addAddress('ithelpdesk@jne.co.id', 'Team IT Helpdesk'); // Ganti tujuan
-            $mail->addCC('mes.it@jne.co.id', 'Team IT');
-            $mail->addCC('mes.it1@jne.co.id', 'Team IT');
-            $mail->addCC('mes.it2@jne.co.id', 'Team IT');
-            $mail->addCC('sigit.suprihandoko@jne.co.id', 'Head IT');
-
-            $mail->Subject = 'Cancel Resi Orion Hybrid';
-            $mail->Body    = $isiEmail;
-
-            $mail->send();
-
-            // ✅ Tambahkan baris ini untuk update status resi
-            $this->model('Resi_models')->ubahStatusOpenMenjadiDone();
-
-            Flasher::setFlash('Resi Berhasil', 'DiEmail ke Helpdesk', 'success');
-            header('Location: ' . BASE_URL . '/home');
-        } catch (Exception $e) {
-            Flasher::setFlash('Gagal', 'DiEmail ke Helpdesk', 'danger');
-            header('Location: ' . BASE_URL . '/home');
-            exit;
-        }
     }
 }

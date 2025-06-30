@@ -1,9 +1,9 @@
 <?php
 
-class Cabang_models
+class Kcuagenmitra_models
 {
 
-    private $table = 'tb_cabang';
+    private $table = 'tb_kcu_agen_mitra';
     private $db;
 
     public function __construct()
@@ -11,7 +11,7 @@ class Cabang_models
         $this->db = new Database;
     }
 
-    public function getAllCabang()
+    public function getAllKcuagenmitra()
     {
         $this->db->query("SELECT * FROM {$this->table}");
         return $this->db->resultSet();

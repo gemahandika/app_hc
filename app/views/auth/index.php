@@ -23,7 +23,7 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
 </head>
 
 
-<body class="bg-info">
+<body class="bg-success">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card p-4 shadow-lg" style="width: 350px;">
             <div class="text-center">
