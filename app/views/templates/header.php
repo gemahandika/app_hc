@@ -79,7 +79,7 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
                             </div>
                             Data Karyawan
                         </a>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
                             Report
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -88,8 +88,8 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="<?= BASE_URL; ?>/report">Data Resi Cancel</a>
                             </nav>
-                        </div>
-                        <?php if (isset($data['userRole']) && in_array($data['userRole'], ['superadmin', 'admin'])) : ?>
+                        </div> -->
+                        <?php if (isset($data['userRole']) && in_array($data['userRole'], ['superadmin'])) : ?>
                             <a class="nav-link" href="<?= BASE_URL; ?>/user">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Users
