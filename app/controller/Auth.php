@@ -16,7 +16,7 @@ class Auth
 
     public function login()
     {
-        session_start();
+
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
