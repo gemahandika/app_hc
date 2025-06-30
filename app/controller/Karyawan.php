@@ -3,6 +3,7 @@
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
 
 class Karyawan extends Controller
@@ -386,9 +387,9 @@ class Karyawan extends Controller
             header('Location: ' . BASE_URL . '/karyawan');
             exit;
         }
+
         $headers = [];
 
-        // Role-based kolom template
         if ($role === 'admin' || $role === 'superadmin') {
             $headers = [
                 'Kategori',
@@ -438,56 +439,121 @@ class Karyawan extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray($headers, NULL, 'A1');
 
-        $contoh = [];
+        // --- Sheet "options" untuk dropdown ---
+        $optionsSheet = $spreadsheet->createSheet();
+        $optionsSheet->setTitle('options');
 
+        $kategoriList = ['MES 1', 'MES 2'];
+        foreach ($kategoriList as $i => $val) {
+            $optionsSheet->setCellValue('C' . ($i + 1), $val);
+        }
+
+        $branchList = [
+            'CABANG BATUBARA',
+            'CABANG ASAHAN',
+            'CABANG BINJAI',
+            'CABANG DAIRI',
+            'CABANG DELI SERDANG',
+            'CABANG KARO',
+            'CABANG LABUHAN BATU',
+            'CABANG LABUHAN BATU SELATAN',
+            'CABANG LABUHAN BATU UTARA',
+            'CABANG PAKPAK BHARAT',
+            'CABANG PAYA GELI',
+            'CABANG SAMOSIR',
+            'CABANG SERDANG BEDAGAI',
+            'CABANG SIANTAR',
+            'CABANG SIMALUNGUN',
+            'CABANG STABAT',
+            'CABANG TANJUNG BALAI',
+            'CABANG TEBING TINGGI',
+            'KCU MEDAN'
+        ];
+        foreach ($branchList as $j => $val) {
+            $optionsSheet->setCellValue('A' . ($j + 1), $val);
+        }
+
+        $kcuList = [
+            'AGEN KOTA MEDAN',
+            'AGEN MES 2',
+            'AGEN MITRA CABANG',
+            'GERAI',
+            'KCU',
+            'MITRA',
+            'MITRA DELIVERY AGEN',
+            'MITRA DELIVERY CABANG'
+        ];
+        foreach ($kcuList as $k => $val) {
+            $optionsSheet->setCellValue('B' . ($k + 1), $val);
+        }
+
+        // --- Contoh baris kedua ---
         if ($role === 'admin' || $role === 'superadmin') {
             $contoh = [
-                'Staff',
-                'Jakarta',
-                'KCU01',
-                'JNE12345',
-                'VND56789',
-                'Andi Wijaya',
-                'PT Mitra Abadi',
-                '08123456789',
-                '998877',
-                '2020-01-01',
-                'Kontrak',
-                'Supervisor',
-                'Sales',
-                'Unit A',
-                'Section 1',
-                '1995-05-15',
-                'Gen Z',
-                'Laki-laki',
-                'Gudang Selatan',
-                'S1',
-                'Manajemen',
-                'Jl. Melati No. 10',
-                'Medan',
-                '1234567890123',
-                '3210987654321',
-                'PT Inti Jasa',
-                'Tetap',
-                'Belum Menikah',
+                'MES 1',
+                'CABANG MEDAN',
+                'KCU MEDAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '2005-05-15 / FORMAT HARUS SEPERTI INI',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '1995-05-15 / FORMAT HARUS SEPERTI INI',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
                 'NO',
-                'Sudah',
-                'Sudah',
-                'Belum',
-                'Sudah',
-                'Ya',
-                'Ya',
-                'Ya',
-                'Ada',
-                'Lengkap'
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                ''
             ];
         } else {
             $contoh = ['Andi Wijaya', '08123456789', '2020-01-01', 'PT Mitra Abadi', 'Section 1', '1995-05-15'];
         }
-
         $sheet->fromArray($contoh, NULL, 'A2');
 
-        // Styling header (bold + grey)
+        // --- Validasi dropdown ---
+        $validasiKolom = [
+            'A' => '=options!$C$1:$C$2',     // Kategori
+            'B' => '=options!$A$1:$A$19',    // Branch
+            'C' => '=options!$B$1:$B$8'      // KCU
+        ];
+
+        foreach ($validasiKolom as $col => $formula) {
+            for ($row = 2; $row <= 100; $row++) {
+                $validation = $sheet->getCell($col . $row)->getDataValidation();
+                $validation->setType(DataValidation::TYPE_LIST);
+                $validation->setErrorStyle(DataValidation::STYLE_STOP);
+                $validation->setAllowBlank(true);
+                $validation->setShowDropDown(true);
+                $validation->setFormula1($formula);
+            }
+        }
+
+        // --- Styling header ---
         $styleHeader = [
             'font' => ['bold' => true],
             'fill' => ['fillType' => 'solid', 'startColor' => ['rgb' => 'DDDDDD']]
@@ -495,7 +561,7 @@ class Karyawan extends Controller
         $lastColumn = Coordinate::stringFromColumnIndex(count($headers));
         $sheet->getStyle("A1:{$lastColumn}1")->applyFromArray($styleHeader);
 
-        // Force download
+        // --- Download Excel ---
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="template_upload_karyawan.xlsx"');
         header('Cache-Control: max-age=0');
