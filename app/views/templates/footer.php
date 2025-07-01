@@ -16,7 +16,6 @@
 <!-- DataTables (pastikan hanya pakai satu versi untuk hindari konflik) -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script> -->
 <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
 
 <!-- Script Aplikasi -->
 <script src="<?= BASE_URL; ?>/js/scripts.js"></script>

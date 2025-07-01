@@ -7,6 +7,20 @@
                     <i class="fa fa-plus"></i> Tambah Karyawan
                 </button>
                 <?php Flasher::flash(); ?>
+                <?php if (isset($_SESSION['flash_stack'])): ?>
+                    <?php foreach ($_SESSION['flash_stack'] as $flash): ?>
+                        <script>
+                            Swal.fire({
+                                icon: '<?= $flash['tipe']; ?>',
+                                title: '<?= $flash['pesan']; ?>',
+                                text: '<?= $flash['aksi']; ?>',
+                                confirmButtonText: 'Oke',
+                                allowOutsideClick: false
+                            });
+                        </script>
+                    <?php endforeach;
+                    unset($_SESSION['flash_stack']); ?>
+                <?php endif; ?>
 
                 <div class="d-flex gap-2">
                     <form action="<?= BASE_URL ?>/karyawan/import" method="POST" enctype="multipart/form-data">
@@ -70,7 +84,7 @@
                         <thead>
                             <tr class="bg-success text-white">
                                 <th class="small text-center">NO</th>
-                                <th class="small text-center" style="min-width: 160px;">ACTION</th>
+                                <th class="small text-center">ACTION</th>
                                 <th class="small text-center">NAMA KARYAWAN</th>
                                 <th class="small text-center">KATEGORI</th>
                                 <th class="small text-center">BRANCH</th>

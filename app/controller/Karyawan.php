@@ -314,65 +314,85 @@ class Karyawan extends Controller
             $gagal = 0;
 
             foreach (array_slice($rows, 1) as $index => $row) {
-                if (empty($row[3]) || empty($row[5])) { // NIK atau Nama kosong → skip
+                $barisExcel = $index + 2;
+
+                $data = [
+                    'kategori' => $row[0] ?? '',
+                    'branch' => $row[1] ?? '',
+                    'kcu_agen' => $row[2] ?? '',
+                    'nik_jne' => $row[3] ?? '',
+                    'nik_vendor' => $row[4] ?? '',
+                    'nama_karyawan' => $row[5] ?? '',
+                    'vendor' => $row[6] ?? '',
+                    'phone' => $row[7] ?? '',
+                    'id_finger' => $row[8] ?? '',
+                    'join_date' => $row[9] ?? '',
+                    'status_karyawan' => $row[10] ?? '',
+                    'jabatan' => $row[11] ?? '',
+                    'posisi' => $row[12] ?? '',
+                    'unit' => $row[13] ?? '',
+                    'section' => $row[14] ?? '',
+                    'birth_date' => $row[15] ?? '',
+                    'gen' => $row[16] ?? '',
+                    'gender' => $row[17] ?? '',
+                    'lokasi_kerja' => $row[18] ?? '',
+                    'pendidikan_terakhir' => $row[19] ?? '',
+                    'jurusan' => $row[20] ?? '',
+                    'alamat' => $row[21] ?? '',
+                    'kecamatan' => $row[22] ?? '',
+                    'bpjs_kesehatan' => $row[23] ?? '',
+                    'bpjs_ketenagakerjaan' => $row[24] ?? '',
+                    'perusahaan_mitra' => $row[25] ?? '',
+                    'status_pekerjaan' => $row[26] ?? '',
+                    'status_pernikahan' => $row[27] ?? '',
+                    'status_resign' => $row[28] ?? '',
+                    'ket_induction' => $row[29] ?? '',
+                    'service_byheart' => $row[30] ?? '',
+                    'code_ofconduct' => $row[31] ?? '',
+                    'visimisi_oflife' => $row[32] ?? '',
+                    'training_sco' => $row[33] ?? '',
+                    'training_sales' => $row[34] ?? '',
+                    'kurir_program' => $row[35] ?? '',
+                    'id_card' => $row[36] ?? '',
+                    'seragam' => $row[37] ?? ''
+                ];
+
+                // 🔎 Validasi wajib: kategori, branch, kcu_agen tidak boleh kosong
+                if (empty($data['kategori']) || empty($data['branch']) || empty($data['kcu_agen'])) {
                     $gagal++;
+                    $_SESSION['flash_stack'][] = [
+                        'pesan' => "Baris ke-{$barisExcel} gagal",
+                        'aksi' => "Kategori, Branch, dan KCU tidak boleh kosong",
+                        'tipe' => 'warning'
+                    ];
                     continue;
                 }
 
-                $data = [
-                    'kategori' => $row[0],
-                    'branch' => $row[1],
-                    'kcu_agen' => $row[2],
-                    'nik_jne' => $row[3],
-                    'nik_vendor' => $row[4],
-                    'nama_karyawan' => $row[5],
-                    'vendor' => $row[6],
-                    'phone' => $row[7],
-                    'id_finger' => $row[8],
-                    'join_date' => $row[9],
-                    'status_karyawan' => $row[10],
-                    'jabatan' => $row[11],
-                    'posisi' => $row[12],
-                    'unit' => $row[13],
-                    'section' => $row[14],
-                    'birth_date' => $row[15],
-                    'gen' => $row[16],
-                    'gender' => $row[17],
-                    'lokasi_kerja' => $row[18],
-                    'pendidikan_terakhir' => $row[19],
-                    'jurusan' => $row[20],
-                    'alamat' => $row[21],
-                    'kecamatan' => $row[22],
-                    'bpjs_kesehatan' => $row[23],
-                    'bpjs_ketenagakerjaan' => $row[24],
-                    'perusahaan_mitra' => $row[25],
-                    'status_pekerjaan' => $row[26],
-                    'status_pernikahan' => $row[27],
-                    'status_resign' => $row[28],
-                    'ket_induction' => $row[29],
-                    'service_byheart' => $row[30],
-                    'code_ofconduct' => $row[31],
-                    'visimisi_oflife' => $row[32],
-                    'training_sco' => $row[33],
-                    'training_sales' => $row[34],
-                    'kurir_program' => $row[35],
-                    'id_card' => $row[36],
-                    'seragam' => $row[37]
-                ];
+                if (!empty($data['nik_jne']) && $this->model('Karyawan_models')->existsByNIK($data['nik_jne'])) {
+                    $gagal++;
+                    $_SESSION['flash_stack'][] = [
+                        'pesan' => "Baris ke-{$barisExcel} gagal",
+                        'aksi' => "NIK JNE sudah terdaftar: {$data['nik_jne']}",
+                        'tipe' => 'error'
+                    ];
+                    continue;
+                }
 
+                // 🚀 Simpan ke database
                 if ($this->model('Karyawan_models')->insert($data)) {
                     $sukses++;
                 } else {
                     $gagal++;
-                    error_log("Gagal insert data ke-{$index}: " . json_encode($data)); // ✅
+                    error_log("❌ Gagal insert data ke-{$barisExcel}: " . json_encode($data));
                 }
             }
-            Flasher::setFlash("Upload selesai: {$sukses} baris berhasil", "{$gagal} baris gagal.", 'success');
-        } else {
-            Flasher::setFlash('Gagal', 'upload file Excel.', 'danger');
-        }
-        error_log('✅ Flash diset dengan sukses!');
 
+            Flasher::setFlash("Upload selesai: {$sukses} baris berhasil", "{$gagal} baris gagal diproses", 'success');
+        } else {
+            Flasher::setFlash('Gagal', 'Upload file Excel bermasalah.', 'danger');
+        }
+
+        error_log('✅ Import selesai dijalankan');
         header('Location: ' . BASE_URL . '/karyawan');
         exit;
     }

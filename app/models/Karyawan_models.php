@@ -320,4 +320,11 @@ class Karyawan_models
         }
         return $this->db->execute();
     }
+
+    public function existsByNIK($nik_jne)
+    {
+        $this->db->query("SELECT COUNT(*) FROM tb_karyawan WHERE nik_jne = :nik");
+        $this->db->bind('nik', $nik_jne);
+        return $this->db->singleColumn() > 0;
+    }
 }

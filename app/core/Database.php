@@ -27,6 +27,13 @@ class Database
         }
     }
 
+    public function singleColumn()
+    {
+        $this->execute();
+        return $this->stmt->fetchColumn();
+    }
+
+
     public function query($query)
     {
         $this->stmt = $this->dbh->prepare($query);

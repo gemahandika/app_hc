@@ -1,36 +1,31 @@
-  if (window.location.pathname.includes('/karyawan')) {
-  Swal.fire({
-    title: 'Memuat data...',
-    html: 'Mohon tunggu sebentar',
-    allowOutsideClick: false,
-    showConfirmButton: false,
-    didOpen: () => {
-      Swal.showLoading();
-    }
-  });
-}
+//   if (window.location.pathname.includes('/karyawan')) {
+//   Swal.fire({
+//     title: 'Memuat data...',
+//     html: 'Mohon tunggu sebentar',
+//     allowOutsideClick: false,
+//     showConfirmButton: false,
+//     didOpen: () => {
+//       Swal.showLoading();
+//     }
+//   });
+// }
 $(document).ready(function () {
   // ========================================
   // 1. INISIALISASI DATATABLES
   // ========================================
   let table = $('#example').DataTable({
- 
-
     scrollX: true,
-    responsive: false,
+    responsive: true,
     deferRender: true,
-    fixedColumns: {
-      leftColumns: 1 // jumlah kolom kiri yang dibekukan
-    },
     initComplete: function () {
-       if (window.location.pathname.includes('/karyawan')) {
-      setTimeout(() => {
-        Swal.close();
-      }, 400); // jeda 400ms biar gak langsung hilang
+        if (window.location.pathname.includes('/karyawan')) {
+            setTimeout(() => {
+                // Swal.close();
+            }, 400);
+        }
     }
-  }
   });
-     table.columns.adjust().draw();
+  table.columns.adjust().draw();
 
   // ========================================
   // 2. INISIALISASI SELECT2 + GEN OPTIONS
