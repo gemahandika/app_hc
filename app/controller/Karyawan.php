@@ -368,15 +368,15 @@ class Karyawan extends Controller
                     continue;
                 }
 
-                if (!empty($data['nik_jne']) && $this->model('Karyawan_models')->existsByNIK($data['nik_jne'])) {
-                    $gagal++;
-                    $_SESSION['flash_stack'][] = [
-                        'pesan' => "Baris ke-{$barisExcel} gagal",
-                        'aksi' => "NIK JNE sudah terdaftar: {$data['nik_jne']}",
-                        'tipe' => 'error'
-                    ];
-                    continue;
-                }
+                // if (!empty($data['nik_jne']) && $this->model('Karyawan_models')->existsByNIK($data['nik_jne'])) {
+                //     $gagal++;
+                //     $_SESSION['flash_stack'][] = [
+                //         'pesan' => "Baris ke-{$barisExcel} gagal",
+                //         'aksi' => "NIK JNE sudah terdaftar: {$data['nik_jne']}",
+                //         'tipe' => 'error'
+                //     ];
+                //     continue;
+                // }
 
                 // 🚀 Simpan ke database
                 if ($this->model('Karyawan_models')->insert($data)) {
