@@ -48,8 +48,8 @@
                         <label for="filter_section" class="form-label">Filter Section</label>
                         <select id="filter_section" class="form-select select2 filter-karyawan">
                             <option value="">-- Pilih Section --</option>
-                            <?php foreach ($section as $s): ?>
-                                <option value="<?= $s['nama_section'] ?>"><?= $s['nama_section'] ?></option>
+                            <?php foreach ($list_section as $s): ?>
+                                <option value="<?= $s['section'] ?>"><?= $s['section'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

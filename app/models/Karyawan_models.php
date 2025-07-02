@@ -232,6 +232,13 @@ class Karyawan_models
         return $this->db->resultSet();
     }
 
+    public function getDistinctSection()
+    {
+        $sql = "SELECT DISTINCT section FROM " . $this->table . " WHERE section IS NOT NULL ORDER BY section ASC";
+        $this->db->query($sql);
+        return $this->db->resultSet();
+    }
+
     public function getKaryawanAktifWithUsia()
     {
         $sql = "SELECT *, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS usia

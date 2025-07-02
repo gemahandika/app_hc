@@ -27,9 +27,10 @@ class Karyawan extends Controller
         $data['karyawan'] = $this->model('Karyawan_models')->getKaryawanAktifWithUsia();
         $data['list_usia'] = $this->model('Karyawan_models')->getAllUsia();
         $data['list_gen'] = $this->model('Karyawan_models')->getDistinctGen();
+        $data['list_section'] = $this->model('Karyawan_models')->getDistinctSection();
 
         // Data master untuk Select2 / form
-        $data['section'] = $this->model('Section_models')->getAllSection();
+        // $data['section'] = $this->model('Section_models')->getAllSection();
         $data['branch'] = $this->model('Branch_models')->getAllBranch();
         $data['kcu'] = $this->model('Kcuagenmitra_models')->getAllKcuagenmitra();
         $data['status_karyawan'] = $this->model('StatusKaryawan_models')->getAllStatusKaryawan();
