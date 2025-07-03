@@ -59,7 +59,7 @@ class Karyawan extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_karyawan'];
-            $data = $this->model('Karyawan_Models')->getById($id);
+            $data = $this->model('Karyawan_models')->getById($id);
 
             // Pastikan datanya bisa di-encode
             if (!$data) {
