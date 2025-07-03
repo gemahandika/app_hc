@@ -64,6 +64,7 @@ class Karyawan extends Controller
             $data = $this->model('Karyawan_Models')->getById($id);
 
             // Kirim data sebagai JSON
+            header('Content-Type: application/json');
             echo json_encode($data);
         }
     }

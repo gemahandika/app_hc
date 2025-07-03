@@ -184,9 +184,11 @@ $(document).ready(function () {
           });
         });
       },
-      error: function (xhr, status, error) {
-        console.error("Gagal ambil data:", error);
-      }
+     error: function (xhr, status, error) {
+      console.error("Gagal ambil data:", error);
+      console.log("Respon server:", xhr.responseText); // ⬅️ ini bantu lihat error PHP
+    }
+
     });
   });
 
