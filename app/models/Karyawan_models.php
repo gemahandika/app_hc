@@ -69,8 +69,9 @@ class Karyawan_models
 
     public function getById($id)
     {
-        $this->db->query("SELECT * FROM tb_karyawan WHERE id_karyawan = :id");
+        $this->db->query("SELECT * FROM tb_karyawan WHERE id_karyawan = :id AND status_resign = :status_resign");
         $this->db->bind('id', $id);
+        $this->db->bind('status_resign', 'NO');
         return $this->db->single();
     }
 

@@ -305,7 +305,7 @@ $(document).ready(function () {
     });
   });
   // ========================================
-  // 5. SUBMIT RESIGN KARYAWAN
+  // 9. SUBMIT RESIGN KARYAWAN
   // ========================================
   $(document).on('submit', '#formResignKaryawan', function (e) {
     e.preventDefault();
