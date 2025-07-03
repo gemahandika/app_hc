@@ -59,13 +59,18 @@ class Karyawan extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_karyawan'];
-
-            // Panggil dari model
             $data = $this->model('Karyawan_Models')->getById($id);
 
-            // Kirim data sebagai JSON
+            // Pastikan datanya bisa di-encode
+            if (!$data) {
+                http_response_code(404);
+                echo json_encode(['error' => 'Data tidak ditemukan']);
+                exit;
+            }
+
             header('Content-Type: application/json');
-            echo json_encode($data);
+            echo json_encode($data, JSON_INVALID_UTF8_IGNORE);
+            exit;
         }
     }
 
