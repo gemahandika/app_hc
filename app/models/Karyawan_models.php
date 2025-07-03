@@ -67,13 +67,6 @@ class Karyawan_models
     }
 
 
-    public function getKaryawanByAktif()
-    {
-        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE status_resign = :status_resign ORDER BY id_karyawan DESC');
-        $this->db->bind(':status_resign', 'NO');
-        return $this->db->resultSet();
-    }
-
     public function getById($id)
     {
         $this->db->query("SELECT * FROM tb_karyawan WHERE id_karyawan = :id");
@@ -119,6 +112,23 @@ class Karyawan_models
             perusahaan_mitra = :perusahaan_mitra,
             status_pekerjaan = :status_pekerjaan,
             status_pernikahan = :status_pernikahan
+          WHERE id_karyawan = :id_karyawan";
+
+        $this->db->query($query);
+
+        foreach ($data as $key => $val) {
+            $this->db->bind($key, $val); // ✅ benar: tanpa titik dua
+        }
+
+        return $this->db->execute(); // pastikan ini ada untuk menjalankan query
+    }
+
+    public function updateKaryawanResign($data)
+    {
+        $query = "UPDATE {$this->table} SET 
+            tgl_resign = :tglResign,
+            ket_resign = :ketResign,
+            status_resign = :status_resign
           WHERE id_karyawan = :id_karyawan";
 
         $this->db->query($query);
@@ -239,21 +249,22 @@ class Karyawan_models
         return $this->db->resultSet();
     }
 
-    public function getKaryawanAktifWithUsia()
-    {
-        $sql = "SELECT *, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS usia
-            FROM tb_karyawan
-            WHERE status_resign = 'NO'";
-        $this->db->query($sql);
-        return $this->db->resultSet();
-    }
-
-    public function getAllUsia()
+    public function getDistinctUsia()
     {
         $sql = "SELECT DISTINCT TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS usia 
             FROM tb_karyawan 
             WHERE status_resign = 'NO'
             ORDER BY usia ASC";
+        $this->db->query($sql);
+        return $this->db->resultSet();
+    }
+
+    public function getKaryawanAktifWithUsia()
+    {
+        $sql = "SELECT *, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS usia
+            FROM tb_karyawan
+            WHERE status_resign = 'NO'
+            ORDER BY id_karyawan DESC";
         $this->db->query($sql);
         return $this->db->resultSet();
     }

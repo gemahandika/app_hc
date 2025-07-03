@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
 
-class Karyawan extends Controller
+class Karyawan_Resign extends Controller
 {
     public function __construct()
     {
@@ -18,24 +18,19 @@ class Karyawan extends Controller
 
     public function index()
     {
-        $data['judul'] = 'Karyawan';
+        $data['judul'] = 'Karyawan_Resign';
         // Ambil data session user
         $data['name'] = $_SESSION['name'] ?? '';
         $data['username'] = $_SESSION['username'] ?? '';
         $data['userRole'] = $_SESSION['role'] ?? '';
         // Data Filter
-        $data['karyawan'] = $this->model('Karyawan_models')->getKaryawanAktifWithUsia();
-        $data['list_usia'] = $this->model('Karyawan_models')->getDistinctUsia();
-        $data['list_gen'] = $this->model('Karyawan_models')->getDistinctGen();
-        $data['list_section'] = $this->model('Karyawan_models')->getDistinctSection();
-        // Data master untuk Select2 / form
-        $data['branch'] = $this->model('Branch_models')->getAllBranch();
-        $data['kcu'] = $this->model('Kcuagenmitra_models')->getAllKcuagenmitra();
-        $data['status_karyawan'] = $this->model('StatusKaryawan_models')->getAllStatusKaryawan();
-        $data['jabatan'] = $this->model('Jabatan_models')->getAllJabatan();
-        // Load view
+        $data['karyawan'] = $this->model('Karyawan_resign_models')->getKaryawanNonaktifWithUsia();
+        $data['list_usia'] = $this->model('Karyawan_resign_models')->getDistinctUsiaResign();
+        $data['list_gen'] = $this->model('Karyawan_resign_models')->getDistinctGenResign();
+        $data['list_section'] = $this->model('Karyawan_resign_models')->getDistinctSectionResign();
+        // view
         $this->view('templates/header', $data);
-        $this->view('karyawan/index', $data);
+        $this->view('karyawan_resign/index', $data);
         $this->view('templates/footer');
     }
 
@@ -45,139 +40,47 @@ class Karyawan extends Controller
         $usia    = $_POST['usia'] ?? '';
         $gen     = $_POST['gen'] ?? '';
 
-        $data['karyawan'] = $this->model('Karyawan_models')->getFilteredKaryawan($section, $usia, $gen);
+        $data['karyawan'] = $this->model('Karyawan_resign_models')->getFilteredKaryawanResign($section, $usia, $gen);
 
         extract($data);
         if (empty($data['karyawan'])) {
             echo 'EMPTY_DATA_MARKER';
             exit;
         }
-        require_once '../app/views/karyawan/_partial_tabel_karyawan.php';
+        require_once '../app/views/karyawan_resign/_partial_tabel_karyawan_resign.php';
     }
 
-    public function getKaryawanById()
+
+
+
+    public function getKaryawanResignById()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_karyawan'];
 
             // Panggil dari model
-            $data = $this->model('Karyawan_Models')->getById($id);
+            $data = $this->model('Karyawan_resign_models')->getByIdResign($id);
 
             // Kirim data sebagai JSON
             echo json_encode($data);
         }
     }
 
-    public function edit()
+    public function editResign()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'id_karyawan' => $_POST['id_karyawan'],
-                'kategori' => $_POST['kategori'],
-                'branch' => $_POST['branch'],
-                'kcu' => $_POST['kcu'],
-                'nikJne' => $_POST['nikJne'],
-                'nikVendor' => $_POST['nikVendor'],
-                'nama' => $_POST['nama'],
-                'vendor' => $_POST['vendor'],
-                'phone' => $_POST['phone'],
-                'finger' => $_POST['finger'],
-                'join' => $_POST['join'],
-                'statusKaryawan' => $_POST['statusKaryawan'],
-                'jabatan' => $_POST['jabatan'],
-                'posisi' => $_POST['posisi'],
-                'unit' => $_POST['unit'],
-                'section' => $_POST['section'],
-                'birthdate' => $_POST['birthdate'],
-                'gen' => $_POST['gen'],
-                'gender' => $_POST['gender'],
-                'lokasi_kerja' => $_POST['lokasi_kerja'],
-                'pendidikan_terakhir' => $_POST['pendidikan_terakhir'],
-                'jurusan' => $_POST['jurusan'],
-                'alamat' => $_POST['alamat'],
-                'kecamatan' => $_POST['kecamatan'],
-                'bpjs_kesehatan' => $_POST['bpjs_kesehatan'],
-                'bpjs_ketenagakerjaan' => $_POST['bpjs_ketenagakerjaan'],
-                'perusahaan_mitra' => $_POST['perusahaan_mitra'],
-                'status_pekerjaan' => $_POST['status_pekerjaan'],
-                'status_pernikahan' => $_POST['status_pernikahan']
+                'tglResign' => $_POST['edit-tgl_resign'],
+                'ketResign' => $_POST['edit-ket_resign'],
+                'statusResign' => $_POST['edit-status_resign']
             ];
-
-            if ($this->model('Karyawan_models')->updateKaryawan($data) > 0) {
+            if ($this->model('Karyawan_resign_models')->updateKaryawanResign($data) > 0) {
                 Flasher::setFlash('berhasil', 'diupdate', 'success');
             } else {
                 Flasher::setFlash('gagal', 'diupdate', 'danger');
             }
-
-            header('Location: ' . BASE_URL . '/karyawan');
-            exit;
-        }
-    }
-
-    public function tambah()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = [
-                'kategori' => $_POST['kategori'],
-                'branch' => $_POST['branch'],
-                'kcu' => $_POST['kcu'],
-                'nikJne' => $_POST['nikJne'],
-                'nikVendor' => $_POST['nikVendor'],
-                'nama' => $_POST['nama'],
-                'vendor' => $_POST['vendor'],
-                'phone' => $_POST['phone'],
-                'finger' => $_POST['finger'],
-                'join' => $_POST['join'],
-                'statusKaryawan' => $_POST['statusKaryawan'],
-                'jabatan' => $_POST['jabatan'],
-                'posisi' => $_POST['posisi'],
-                'unit' => $_POST['unit'],
-                'section' => $_POST['section'],
-                'birthdate' => $_POST['birthdate'],
-                'gen' => $_POST['gen'],
-                'gender' => $_POST['gender'],
-                'lokasi_kerja' => $_POST['lokasi_kerja'],
-                'pendidikan_terakhir' => $_POST['pendidikan_terakhir'],
-                'jurusan' => $_POST['jurusan'],
-                'alamat' => $_POST['alamat'],
-                'kecamatan' => $_POST['kecamatan'],
-                'bpjs_kesehatan' => $_POST['bpjs_kesehatan'],
-                'bpjs_ketenagakerjaan' => $_POST['bpjs_ketenagakerjaan'],
-                'perusahaan_mitra' => $_POST['perusahaan_mitra'],
-                'status_pekerjaan' => $_POST['status_pekerjaan'],
-                'status_pernikahan' => $_POST['status_pernikahan'],
-                'status_resign' => 'NO'
-
-            ];
-
-            if ($this->model('Karyawan_models')->addKaryawan($data) > 0) {
-                Flasher::setFlash('berhasil', 'ditambahkan', 'success');
-            } else {
-                Flasher::setFlash('gagal', 'ditambahkan', 'danger');
-            }
-
-            header('Location: ' . BASE_URL . '/karyawan');
-            exit;
-        }
-    }
-
-    public function resign()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = [
-                'id_karyawan' => $_POST['id_karyawanResign'],
-                'tglResign' => $_POST['tglResign'],
-                'ketResign' => $_POST['ketResign'],
-                'status_resign' => 'YES'
-            ];
-
-            if ($this->model('Karyawan_models')->updateKaryawanResign($data) > 0) {
-                Flasher::setFlash('berhasil', 'diupdate', 'success');
-            } else {
-                Flasher::setFlash('gagal', 'diupdate', 'danger');
-            }
-
-            header('Location: ' . BASE_URL . '/karyawan');
+            header('Location: ' . BASE_URL . '/karyawan_resign');
             exit;
         }
     }
@@ -201,10 +104,10 @@ class Karyawan extends Controller
         $gen     = $_POST['gen'] ?? '';
         $usia    = $_POST['usia'] ?? '';
 
-        $karyawan = $this->model('Karyawan_models')->getFilteredKaryawan($section, $usia, $gen);
+        $karyawan = $this->model('Karyawan_resign_models')->getFilteredKaryawan($section, $usia, $gen);
 
         header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=Data_Karyawan_" . date('Ymd_His') . ".xls");
+        header("Content-Disposition: attachment; filename=Data_Karyawan_Resign_" . date('Ymd_His') . ".xls");
 
         echo '<table border="1">';
         echo '<thead><tr>
@@ -309,7 +212,7 @@ class Karyawan extends Controller
     }
 
 
-    public function import()
+    public function importResign()
     {
         if (isset($_FILES['file_excel']) && $_FILES['file_excel']['error'] === 0) {
             $tmpFile = $_FILES['file_excel']['tmp_name'];
@@ -363,7 +266,9 @@ class Karyawan extends Controller
                     'training_sales' => $row[34] ?? '',
                     'kurir_program' => $row[35] ?? '',
                     'id_card' => $row[36] ?? '',
-                    'seragam' => $row[37] ?? ''
+                    'seragam' => $row[37] ?? '',
+                    'tgl_resign' => $row[38] ?? '',
+                    'ket_resign' => $row[39] ?? ''
                 ];
 
                 // 🔎 Validasi wajib: kategori, branch, kcu_agen tidak boleh kosong
@@ -377,18 +282,8 @@ class Karyawan extends Controller
                     continue;
                 }
 
-                // if (!empty($data['nik_jne']) && $this->model('Karyawan_models')->existsByNIK($data['nik_jne'])) {
-                //     $gagal++;
-                //     $_SESSION['flash_stack'][] = [
-                //         'pesan' => "Baris ke-{$barisExcel} gagal",
-                //         'aksi' => "NIK JNE sudah terdaftar: {$data['nik_jne']}",
-                //         'tipe' => 'error'
-                //     ];
-                //     continue;
-                // }
-
                 // 🚀 Simpan ke database
-                if ($this->model('Karyawan_models')->insert($data)) {
+                if ($this->model('Karyawan_resign_models')->insertResign($data)) {
                     $sukses++;
                 } else {
                     $gagal++;
@@ -402,13 +297,13 @@ class Karyawan extends Controller
         }
 
         error_log('✅ Import selesai dijalankan');
-        header('Location: ' . BASE_URL . '/karyawan');
+        header('Location: ' . BASE_URL . '/karyawan_resign');
         exit;
     }
 
 
 
-    public function template()
+    public function templateResign()
     {
         $role = $_SESSION['role'] ?? 'guest';
         if (!in_array($role, ['admin', 'superadmin', 'user'])) {
@@ -458,7 +353,9 @@ class Karyawan extends Controller
                 'Training Sales',
                 'Kurir Program',
                 'ID Card',
-                'Seragam'
+                'Seragam',
+                'Tgl Resign',
+                'Keterangan Resign'
             ];
         } else {
             $headers = ['Nama Karyawan', 'Phone', 'Join Date', 'Vendor', 'Section', 'Birth Date'];
@@ -520,7 +417,7 @@ class Karyawan extends Controller
         if ($role === 'admin' || $role === 'superadmin') {
             $contoh = [
                 'MES 1',
-                'CABANG MEDAN',
+                'KCU MEDAN',
                 'KCU MEDAN',
                 '',
                 '',
@@ -547,7 +444,7 @@ class Karyawan extends Controller
                 '',
                 '',
                 '',
-                'NO',
+                'YES',
                 '',
                 '',
                 '',
@@ -557,10 +454,12 @@ class Karyawan extends Controller
                 '',
                 '',
                 '',
+                '',
+                '1995-05-15 / FORMAT HARUS SEPERTI INI',
                 ''
             ];
         } else {
-            $contoh = ['Andi Wijaya', '08123456789', '2020-01-01', 'PT Mitra Abadi', 'Section 1', '1995-05-15'];
+            $contoh = ['Andi Wijaya', '08123456789', '2020-01-01', 'PT Jne Express', 'Section 1', '1995-05-15'];
         }
         $sheet->fromArray($contoh, NULL, 'A2');
 
@@ -592,7 +491,7 @@ class Karyawan extends Controller
 
         // --- Download Excel ---
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="template_upload_karyawan.xlsx"');
+        header('Content-Disposition: attachment; filename="template_upload_karyawan_resign.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);

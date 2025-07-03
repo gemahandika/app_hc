@@ -19,11 +19,10 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
     <link href="<?= BASE_URL; ?>/css/custom.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-    <!-- Select2 z-index fix (opsional tapi aman) -->
     <style>
         .select2-container {
             z-index: 9999 !important;
@@ -77,6 +76,11 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i>
                             </div>
                             Data Karyawan
+                        </a>
+                        <a class="nav-link" href="<?= BASE_URL; ?>/karyawan_resign">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-lock"></i>
+                            </div>
+                            Karyawan Resign
                         </a>
                         <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>

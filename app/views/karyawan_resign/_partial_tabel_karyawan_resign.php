@@ -5,15 +5,14 @@ if (!empty($karyawan)) : ?>
     foreach ($karyawan as $karyawan) : ?>
         <tr>
             <td class="small text-center"><?= $no++ ?></td>
-            <td class="d-flex gap-2">
-                <button class="btn btn-danger btn-sm btn-resignKaryawan" data-id="<?= $karyawan['id_karyawan']; ?>">
-                    <i class="fa fa-lock"></i> Resign
-                </button>
-                <button class="btn btn-success btn-sm btn-editKaryawan" data-id="<?= $karyawan['id_karyawan']; ?>">
+            <td class="d-flex p-2">
+                <button class="btn btn-secondary btn-sm btn-editKaryawanResign" data-id="<?= $karyawan['id_karyawan']; ?>">
                     <i class="fa fa-edit"></i> Edit
                 </button>
             </td>
             <td class="small text-center"><?= $karyawan['nama_karyawan'] ?></td>
+            <td class="small text-center"><?= $karyawan['tgl_resign'] ?></td>
+            <td class="small text-center"><?= $karyawan['ket_resign'] ?></td>
             <td class="small text-center"><?= $karyawan['kategori'] ?></td>
             <td class="small text-center"><?= $karyawan['branch'] ?></td>
             <td class="small text-center"><?= $karyawan['kcu_agen'] ?></td>

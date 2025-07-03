@@ -1,26 +1,30 @@
-//   if (window.location.pathname.includes('/karyawan')) {
-//   Swal.fire({
-//     title: 'Memuat data...',
-//     html: 'Mohon tunggu sebentar',
-//     allowOutsideClick: false,
-//     showConfirmButton: false,
-//     didOpen: () => {
-//       Swal.showLoading();
-//     }
-//   });
-// }
+if (window.location.pathname.includes('/karyawan')) {
+  Swal.fire({
+    title: 'Memuat data...',
+    html: 'Mohon tunggu sebentar',
+    allowOutsideClick: false,
+    showConfirmButton: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+}
+
 $(document).ready(function () {
   // ========================================
   // 1. INISIALISASI DATATABLES
   // ========================================
   let table = $('#example').DataTable({
     scrollX: true,
-    responsive: true,
-    deferRender: true,
+    scrollCollapse: true,
+    paging: true,
+    fixedColumns: {
+        leftColumns: 2 // Kolom "Action" di sebelah kiri akan dibekukan
+    },
     initComplete: function () {
         if (window.location.pathname.includes('/karyawan')) {
             setTimeout(() => {
-                // Swal.close();
+                Swal.close();
             }, 400);
         }
     }
@@ -28,61 +32,64 @@ $(document).ready(function () {
   table.columns.adjust().draw();
 
   // ========================================
-  // 2. INISIALISASI SELECT2 + GEN OPTIONS
+  // 2. INISIALISASI SELECT2
   // ========================================
   $('.select2').select2();
 
-  $.ajax({
-    url: BASE_URL + '/karyawan/getGenOptions',
-    type: 'GET',
-    dataType: 'json',
-    success: function (data) {
-      const $select = $('#filter_gen');
-      $select.empty().append('<option value="">-- Pilih Gen --</option>');
-      $.each(data, function (i, val) {
-        $select.append(`<option value="${val}">${val}</option>`);
-      });
-      $select.trigger('change');
-    }
-  });
-
   // ========================================
-  // 3. HANDLER FILTER (Usia + Gen + Section)
+  // 3. HANDLER FILTER (Modular untuk Aktif & Resign)
   // ========================================
-  $('.filter-karyawan').on('change', function () {
+  function handleKaryawanFilter({
+    statusResign = 'NO',
+    usiaSelector,
+    genSelector,
+    sectionSelector,
+    exportPrefix,
+    tableId,
+    resultContainer,
+    endpoint = '/karyawan/filter'
+  })
+  {
     const dataFilter = {
-      usia: $('#filter_usia').val(),
-      gen: $('#filter_gen').val(),
-      section: $('#filter_section').val()
+      usia: $(usiaSelector).val(),
+      gen: $(genSelector).val(),
+      section: $(sectionSelector).val(),
+      status_resign: statusResign
     };
-
-    $('#export_section').val($('#filter_section').val());
-    $('#export_gen').val($('#filter_gen').val());
-    $('#export_usia').val($('#filter_usia').val());
+  // Export
+    $(`#${exportPrefix}_section`).val(dataFilter.section);
+    $(`#${exportPrefix}_gen`).val(dataFilter.gen);
+    $(`#${exportPrefix}_usia`).val(dataFilter.usia);
 
     $.ajax({
-      url: BASE_URL + '/karyawan/filter',
+      url: BASE_URL + endpoint,
       method: 'POST',
       data: dataFilter,
       success: function (res) {
-          if (res.trim() === 'EMPTY_DATA_MARKER') {
-            Swal.fire({
-              icon: 'info',
-              title: 'Tidak ada data',
-              text: 'Data tidak ditemukan untuk filter yang kamu pilih.'
-            });
-            $('#example').find('tbody#karyawanResult').html('');
-            return;
-          }
-        table.clear().draw();
-        table.destroy();
-        $('#example').find('tbody#karyawanResult').html(res);
-        setTimeout(() => {
-          table = $('#example').DataTable({
-            scrollX: true,
-            responsive: true
+        if (res.trim() === 'EMPTY_DATA_MARKER') {
+          Swal.fire({
+            icon: 'info',
+            title: 'Tidak ada data',
+            text: 'Data tidak ditemukan untuk filter yang kamu pilih.'
           });
-        }, 50);
+          $(`#${tableId}`).find(`tbody#${resultContainer}`).html('');
+          return;
+        }
+
+        let dt = $(`#${tableId}`).DataTable();
+        dt?.clear().draw();
+        dt?.destroy();
+
+        $(`#${tableId}`).find(`tbody#${resultContainer}`).html(res);
+
+        setTimeout(() => {
+          $(`#${tableId}`).DataTable({
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            fixedColumns: { leftColumns: 2 }
+          });
+        }, 0);
       },
       error: function () {
         Swal.fire({
@@ -91,6 +98,38 @@ $(document).ready(function () {
           text: 'Gagal memuat data berdasarkan filter.'
         });
       }
+    });
+  }
+
+  // ========================================
+  // EVENT untuk halaman AKTIF
+  // ========================================
+  $('.filter-karyawan').on('change', function () {
+    handleKaryawanFilter({
+      statusResign: 'NO',
+      usiaSelector: '#filter_usia',
+      genSelector: '#filter_gen',
+      sectionSelector: '#filter_section',
+      exportPrefix: 'export',
+      tableId: 'example',
+      resultContainer: 'karyawanResult',
+      endpoint: '/karyawan/filter'
+    });
+  });
+
+  // ========================================
+  // EVENT untuk halaman RESIGN
+  // ========================================
+  $('.filter-karyawan-resign').on('change', function () {
+    handleKaryawanFilter({
+      statusResign: 'YES',
+      usiaSelector: '#filter_usia_resign',
+      genSelector: '#filter_gen_resign',
+      sectionSelector: '#filter_section_resign',
+      exportPrefix: 'export_resign',
+      tableId: 'example',
+      resultContainer: 'karyawanResult',
+      endpoint: '/karyawan_resign/filter'
     });
   });
 
@@ -234,4 +273,118 @@ $(document).ready(function () {
       }
     });
   });
+
+   // ========================================
+  // 8. MODAL RESIGN KARYAWAN
+  // ========================================
+  $(document).on('click', '.btn-resignKaryawan', function () {
+    const id = $(this).data('id');
+    $.ajax({
+      url: BASE_URL + '/karyawan/getKaryawanById',
+      method: 'POST',
+      data: { id_karyawan: id },
+      dataType: 'json',
+      success: function (data) {
+        $('#resign-idKaryawan').val(data.id_karyawan);
+        $('#resign-nikJne').val(data.nik_jne);
+        $('#resign-nama').val(data.nama_karyawan);
+
+        const modal = new bootstrap.Modal(document.getElementById('modalResignKaryawan'));
+        modal.show();
+
+        $('#modalResignKaryawan').on('shown.bs.modal', function () {
+          $('#resign-branch, #resign-kcu, #resign-statusKaryawan, #resign-jabatan').select2({
+            dropdownParent: $('#modalResignKaryawan'),
+            width: '100%'
+          });
+        });
+      },
+      error: function (xhr, status, error) {
+        console.error("Gagal ambil data:", error);
+      }
+    });
+  });
+  // ========================================
+  // 5. SUBMIT RESIGN KARYAWAN
+  // ========================================
+  $(document).on('submit', '#formResignKaryawan', function (e) {
+    e.preventDefault();
+    const formData = $(this).serialize();
+    $.ajax({
+      url: BASE_URL + '/karyawan/resign',
+      method: 'POST',
+      data: formData,
+      success: function () {
+        $('#modalResignKaryawan').modal('hide');
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil',
+          text: 'Karyawan Resign Berhasil di Tambah'
+        }).then(() => location.reload());
+      },
+      error: function () {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Terjadi kesalahan saat mengupdate data.'
+        });
+      }
+    });
+  });
+
+  // ========================================
+  // 4. MODAL EDIT KARYAWAN RESIGN
+  // ========================================
+  $(document).on('click', '.btn-editKaryawanResign', function () {
+    const id = $(this).data('id');
+    $.ajax({
+      url: BASE_URL + '/karyawan_resign/getKaryawanResignById',
+      method: 'POST',
+      data: { id_karyawan: id },
+      dataType: 'json',
+      success: function (data) {
+        $('#editResign-idKaryawan').val(data.id_karyawan);
+        $('#editResign-nama').val(data.nama_karyawan);
+        $('#editResign-tgl').val(data.tgl_resign);
+        $('#editResign-ket').val(data.ket_resign);
+        $('#editResign-status').val(data.status_resign);
+
+        const modal = new bootstrap.Modal(document.getElementById('modalEditKaryawanResign'));
+        modal.show();
+      },
+      error: function (xhr, status, error) {
+        console.error("Gagal ambil data:", error);
+      }
+    });
+  });
+
+  // ========================================
+  // 5. SUBMIT EDIT KARYAWAN RESIGN
+  // ========================================
+  $(document).on('submit', '#formEditKaryawanResign', function (e) {
+    e.preventDefault();
+    const formData = $(this).serialize();
+    $.ajax({
+      url: BASE_URL + '/karyawan_resign/editResign',
+      method: 'POST',
+      data: formData,
+      success: function () {
+        $('#modalEditKaryawanResign').modal('hide');
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil',
+          text: 'Data karyawan berhasil diperbarui!'
+        }).then(() => location.reload());
+      },
+      error: function () {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Terjadi kesalahan saat mengupdate data.'
+        });
+      }
+    });
+  });
+
+
 });

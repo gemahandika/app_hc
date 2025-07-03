@@ -3,9 +3,11 @@
         <h3 class="mt-4" style="border-bottom: 1px solid black;">Data Karyawan</h3>
         <div class="card mb-4 mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambahKaryawan">
-                    <i class="fa fa-plus"></i> Tambah Karyawan
-                </button>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambahKaryawan">
+                        <i class="fa fa-plus"></i> Tambah Karyawan
+                    </button>
+                </div>
                 <?php Flasher::flash(); ?>
                 <?php if (isset($_SESSION['flash_stack'])): ?>
                     <?php foreach ($_SESSION['flash_stack'] as $flash): ?>
@@ -22,7 +24,7 @@
                     unset($_SESSION['flash_stack']); ?>
                 <?php endif; ?>
 
-                <div class="d-flex gap-2">
+                <div class="d-flex flex-wrap gap-2">
                     <form action="<?= BASE_URL ?>/karyawan/import" method="POST" enctype="multipart/form-data">
                         <input type="file" name="file_excel" accept=".xls,.xlsx,.csv" required>
                         <button type="submit" class="btn btn-primary btn-sm">
@@ -83,8 +85,8 @@
                     <table id="example" class="display nowrap" style="width:100%">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th class="small text-center">NO</th>
-                                <th class="small text-center">ACTION</th>
+                                <th class="small text-center bg-success">NO</th>
+                                <th class="small text-center bg-success">ACTION</th>
                                 <th class="small text-center">NAMA KARYAWAN</th>
                                 <th class="small text-center">KATEGORI</th>
                                 <th class="small text-center">BRANCH</th>
@@ -450,6 +452,45 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                     <button type="submit" class="btn btn-success">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Resign -->
+                <div class="modal fade" id="modalResignKaryawan" tabindex="-1" aria-labelledby="modalResignKaryawanLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <form action="<?= BASE_URL; ?>/karyawan/resign" id="formResignKaryawan" method="POST">
+                                <div class="modal-header bg-success text-white">
+                                    <h6 class="modal-title" id="modalResignKaryawanLabel">FORM RESIGN KARYAWAN</h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                                    <input type="hidden" name="id_karyawanResign" id="resign-idKaryawan">
+                                    <div class="row flex-column">
+                                        <div class="col-12 mb-3">
+                                            <label for="nama" class="form-label fw-bold">Nama Karyawan</label>
+                                            <input class="form-control" type="text" name="nama" id="resign-nama" style="background-color: rgba(53, 220, 145, 0.3);" readonly>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label for="nikJne" class="form-label fw-bold">Nik JNE</label>
+                                            <input class="form-control" type="text" name="nikJne" id="resign-nikJne" style="background-color: rgba(53, 220, 145, 0.3);" readonly>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label for="tglResign" class="form-label fw-bold">Tgl Resign</label>
+                                            <input class="form-control" type="date" name="tglResign" id="resign-tgl" required>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label for="ketResign" class="form-label fw-bold">Keterangan Resign</label>
+                                            <input class="form-control" type="text" name="ketResign" id="resign-ket" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-success">SUBMIT</button>
                                 </div>
                             </form>
                         </div>

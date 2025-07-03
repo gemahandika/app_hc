@@ -8,12 +8,12 @@
                        <div class="row g-3 align-items-end">
                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                                <label for="tgl_dari" class="form-label"><strong>Date From:</strong></label>
-                               <input type="date" class="form-control" id="tgl_dari" name="tgl_dari" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_dari'] ?? '' ?>" required>
+                               <input type="date" class="form-control" id="tgl_dari" name="tgl_dari" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_dari'] ?? '' ?>">
                            </div>
 
                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                                <label for="tgl_ke" class="form-label"><strong>Date Thru:</strong></label>
-                               <input type="date" class="form-control" id="tgl_ke" name="tgl_ke" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_ke'] ?? '' ?>" required>
+                               <input type="date" class="form-control" id="tgl_ke" name="tgl_ke" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_ke'] ?? '' ?>">
                            </div>
 
                            <div class="col-12 col-md-4 col-lg-3">
