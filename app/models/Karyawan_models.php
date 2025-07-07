@@ -238,14 +238,14 @@ class Karyawan_models
 
     public function getDistinctGen()
     {
-        $sql = "SELECT DISTINCT gen FROM " . $this->table . " WHERE gen IS NOT NULL ORDER BY gen ASC";
+        $sql = "SELECT DISTINCT gen FROM " . $this->table . " WHERE gen IS NOT NULL AND status_resign = 'NO' ORDER BY gen ASC";
         $this->db->query($sql);
         return $this->db->resultSet();
     }
 
     public function getDistinctSection()
     {
-        $sql = "SELECT DISTINCT section FROM " . $this->table . " WHERE section IS NOT NULL ORDER BY section ASC";
+        $sql = "SELECT DISTINCT section FROM " . $this->table . " WHERE section IS NOT NULL AND status_resign = 'NO' ORDER BY section ASC";
         $this->db->query($sql);
         return $this->db->resultSet();
     }

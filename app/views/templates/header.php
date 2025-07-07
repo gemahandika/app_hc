@@ -65,6 +65,11 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
+                    <?php
+                    $currentPage = basename($_SERVER['REQUEST_URI']);
+                    $isKaryawan = in_array($currentPage, ['karyawan', 'karyawan_resign']);
+                    $isTraining = in_array($currentPage, ['training']);
+                    ?>
                     <div class="nav">
                         <span class="nav-link mb-4" style="border-bottom: solid 1px white;"><?= htmlspecialchars($name) ?></span>
                         <a class="nav-link" href="<?= BASE_URL; ?>">
@@ -72,26 +77,32 @@ Flasher::loginFlash(); // Tampilkan pesan jika ada
                             </div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="<?= BASE_URL; ?>/karyawan">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i>
-                            </div>
+                        <!-- Data Karyawan Menu -->
+                        <a class="nav-link <?= $isKaryawan ? '' : 'collapsed' ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseKaryawan" aria-expanded="<?= $isKaryawan ? 'true' : 'false' ?>" aria-controls="collapseKaryawan">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Data Karyawan
-                        </a>
-                        <a class="nav-link" href="<?= BASE_URL; ?>/karyawan_resign">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user-lock"></i>
-                            </div>
-                            Karyawan Resign
-                        </a>
-                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
-                            Report
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse <?= $isKaryawan ? 'show' : '' ?>" id="collapseKaryawan" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="<?= BASE_URL; ?>/report">Data Resi Cancel</a>
+                                <a class="nav-link <?= $currentPage === 'karyawan' ? 'active' : '' ?>" href="<?= BASE_URL; ?>/karyawan">Karyawan Aktif</a>
+                                <a class="nav-link <?= $currentPage === 'karyawan_resign' ? 'active' : '' ?>" href="<?= BASE_URL; ?>/karyawan_resign">Karyawan Resign</a>
                             </nav>
-                        </div> -->
+                        </div>
+
+                        <!-- Data Training Menu -->
+                        <a class="nav-link <?= $isTrainig ? '' : 'collapsed' ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseTraining" aria-expanded="<?= $isKaryawan ? 'true' : 'false' ?>" aria-controls="collapseKaryawan">
+                            <div class="sb-nav-link-icon"><i class="fas fa-graduation-cap"></i></div>
+                            Data Training
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse <?= $isTraining ? 'show' : '' ?>" id="collapseTraining" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link <?= $currentPage === 'training' ? 'active' : '' ?>" href="<?= BASE_URL; ?>/training">Karyawan Training</a>
+                            </nav>
+                        </div>
+
+
                         <?php if (isset($data['userRole']) && in_array($data['userRole'], ['superadmin'])) : ?>
                             <a class="nav-link" href="<?= BASE_URL; ?>/user">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>

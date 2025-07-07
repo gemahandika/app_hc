@@ -2,40 +2,40 @@
        <div class="container-fluid px-4">
            <h4 class="mt-4" style="border-bottom: solid 1px black;">Dashboard</h4>
            <?php Flasher::flash();  ?>
-           <div class="card mb-4 mt-4 pb-4">
-               <div class="container mt-3">
-                   <form method="GET" class="mb-4">
-                       <div class="row g-3 align-items-end">
-                           <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                               <label for="tgl_dari" class="form-label"><strong>Date From:</strong></label>
-                               <input type="date" class="form-control" id="tgl_dari" name="tgl_dari" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_dari'] ?? '' ?>">
-                           </div>
+           <div class="card mb-4 mt-4 pb-4" style="overflow: visible; z-index: 1">
+               <form method=" GET" class="px-3 pt-3">
+                   <div class="row g-3 align-items-end">
 
-                           <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                               <label for="tgl_ke" class="form-label"><strong>Date Thru:</strong></label>
-                               <input type="date" class="form-control" id="tgl_ke" name="tgl_ke" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_ke'] ?? '' ?>">
-                           </div>
-
-                           <div class="col-12 col-md-4 col-lg-3">
-                               <label for="branch" class="form-label"><strong>Branch:</strong></label>
-                               <select id="branch" name="branch" class="form-select select2 form-control">
-                                   <option value="">-- Pilih Branch --</option>
-                                   <?php foreach ($data['branch_list'] as $row): ?>
-                                       <option value="<?= $row['branch']; ?>" <?= isset($_GET['branch']) && $_GET['branch'] === $row['branch'] ? 'selected' : '' ?>>
-                                           <?= $row['branch']; ?>
-                                       </option>
-                                   <?php endforeach; ?>
-                               </select>
-                           </div>
-
-                           <div class="col-12 col-lg-3 d-grid">
-                               <button type="submit" class="btn btn-primary">
-                                   <i class="fa fa-filter me-2"></i> Filter
-                               </button>
-                           </div>
+                       <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                           <label for="tgl_dari" class="form-label fw-bold">Date From:</label>
+                           <input type="date" class="form-control" id="tgl_dari" name="tgl_dari" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_dari'] ?? '' ?>">
                        </div>
-                   </form>
-               </div>
+
+                       <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                           <label for="tgl_ke" class="form-label fw-bold">Date Thru:</label>
+                           <input type="date" class="form-control" id="tgl_ke" name="tgl_ke" max="<?= date('Y-m-d') ?>" value="<?= $_GET['tgl_ke'] ?? '' ?>">
+                       </div>
+
+                       <div class="col-12 col-md-6 col-lg-3">
+                           <label for="branch" class="form-label fw-bold">Branch:</label>
+                           <select id="branch" name="branch" class="form-select select2">
+                               <option value="">-- Pilih Branch --</option>
+                               <?php foreach ($data['branch_list'] as $row): ?>
+                                   <option value="<?= $row['branch']; ?>" <?= isset($_GET['branch']) && $_GET['branch'] === $row['branch'] ? 'selected' : '' ?>>
+                                       <?= $row['branch']; ?>
+                                   </option>
+                               <?php endforeach; ?>
+                           </select>
+                       </div>
+
+                       <div class="col-12 col-md-6 col-lg-3 d-grid">
+                           <button type="submit" class="btn btn-primary mt-md-4">
+                               <i class="fa fa-filter me-2"></i> Filter
+                           </button>
+                       </div>
+
+                   </div>
+               </form>
            </div>
            <?php if (!empty($data['filter_badge'])): ?>
                <div class="alert alert-info d-flex align-items-center mb-4" role="alert">

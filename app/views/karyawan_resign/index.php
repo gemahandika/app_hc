@@ -82,7 +82,7 @@
                             <tr class="bg-danger text-white">
                                 <th class="small text-center bg-danger">NO</th>
                                 <th class="small text-center bg-danger">ACTION</th>
-                                <th class="small text-center">NAMA KARYAWAN</th>
+                                <th class="small text-center bg-danger">NAMA KARYAWAN</th>
                                 <th class="small text-center">TGL RESIGN</th>
                                 <th class="small text-center">KETERANGAN RESIGN</th>
                                 <th class="small text-center">KATEGORI</th>

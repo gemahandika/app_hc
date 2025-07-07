@@ -19,7 +19,7 @@ $(document).ready(function () {
     scrollCollapse: true,
     paging: true,
     fixedColumns: {
-        leftColumns: 2 // Kolom "Action" di sebelah kiri akan dibekukan
+        leftColumns: 3 // Kolom "Action" di sebelah kiri akan dibekukan
     },
     initComplete: function () {
         if (window.location.pathname.includes('/karyawan')) {
@@ -87,7 +87,7 @@ $(document).ready(function () {
             scrollX: true,
             scrollCollapse: true,
             paging: true,
-            fixedColumns: { leftColumns: 2 }
+            fixedColumns: { leftColumns: 3 }
           });
         }, 0);
       },
@@ -102,7 +102,7 @@ $(document).ready(function () {
   }
 
   // ========================================
-  // EVENT untuk halaman AKTIF
+  // 4. EVENT untuk halaman AKTIF
   // ========================================
   $('.filter-karyawan').on('change', function () {
     handleKaryawanFilter({
@@ -118,7 +118,7 @@ $(document).ready(function () {
   });
 
   // ========================================
-  // EVENT untuk halaman RESIGN
+  // 5. EVENT untuk halaman RESIGN
   // ========================================
   $('.filter-karyawan-resign').on('change', function () {
     handleKaryawanFilter({
@@ -134,7 +134,7 @@ $(document).ready(function () {
   });
 
   // ========================================
-  // 4. MODAL EDIT KARYAWAN
+  // 6. MODAL EDIT KARYAWAN
   // ========================================
   $(document).on('click', '.btn-editKaryawan', function () {
     const id = $(this).data('id');
@@ -193,7 +193,7 @@ $(document).ready(function () {
   });
 
   // ========================================
-  // 5. SUBMIT EDIT KARYAWAN
+  // 7. SUBMIT EDIT KARYAWAN
   // ========================================
   $(document).on('submit', '#formEditKaryawan', function (e) {
     e.preventDefault();
@@ -221,7 +221,7 @@ $(document).ready(function () {
   });
 
   // ========================================
-  // 6. MODAL TAMBAH KARYAWAN
+  // 8. MODAL TAMBAH KARYAWAN
   // ========================================
   $('#modalTambahKaryawan').on('shown.bs.modal', function () {
     $('#tambah-branch, #tambah-kcu, #tambah-statusKaryawan, #tambah-jabatan').select2({
@@ -231,7 +231,7 @@ $(document).ready(function () {
   });
 
   // ========================================
-  // 7. SUBMIT TAMBAH KARYAWAN
+  // 9. SUBMIT TAMBAH KARYAWAN
   // ========================================
   $(document).on('submit', '#formTambahKaryawan', function (e) {
     e.preventDefault();
@@ -277,7 +277,7 @@ $(document).ready(function () {
   });
 
    // ========================================
-  // 8. MODAL RESIGN KARYAWAN
+  // 10. MODAL RESIGN KARYAWAN
   // ========================================
   $(document).on('click', '.btn-resignKaryawan', function () {
     const id = $(this).data('id');
@@ -307,7 +307,7 @@ $(document).ready(function () {
     });
   });
   // ========================================
-  // 9. SUBMIT RESIGN KARYAWAN
+  // 11. SUBMIT RESIGN KARYAWAN
   // ========================================
   $(document).on('submit', '#formResignKaryawan', function (e) {
     e.preventDefault();
@@ -335,7 +335,7 @@ $(document).ready(function () {
   });
 
   // ========================================
-  // 4. MODAL EDIT KARYAWAN RESIGN
+  // 12. MODAL EDIT KARYAWAN RESIGN
   // ========================================
   $(document).on('click', '.btn-editKaryawanResign', function () {
     const id = $(this).data('id');
@@ -361,7 +361,7 @@ $(document).ready(function () {
   });
 
   // ========================================
-  // 5. SUBMIT EDIT KARYAWAN RESIGN
+  // 13. SUBMIT EDIT KARYAWAN RESIGN
   // ========================================
   $(document).on('submit', '#formEditKaryawanResign', function (e) {
     e.preventDefault();
@@ -376,6 +376,64 @@ $(document).ready(function () {
           icon: 'success',
           title: 'Berhasil',
           text: 'Data karyawan berhasil diperbarui!'
+        }).then(() => location.reload());
+      },
+      error: function () {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Terjadi kesalahan saat mengupdate data.'
+        });
+      }
+    });
+  });
+
+   // ========================================
+  // 14. MODAL EDIT KARYAWAN TRAINING
+  // ========================================
+  $(document).on('click', '.btn-editTraining', function () {
+    const id = $(this).data('id');
+    $.ajax({
+      url: BASE_URL + '/training/getKaryawanTrainingById',
+      method: 'POST',
+      data: { id_karyawan: id },
+      dataType: 'json',
+      success: function (data) {
+        $('#editTraining-idKaryawan').val(data.id_karyawan);
+        $('#editTraining-nama').val(data.nama_karyawan);
+        $('#editTraining-ket_induction').val(data.ket_induction);
+        $('#editTraining-service_byheart').val(data.service_byheart);
+        $('#editTraining-code_ofconduct').val(data.code_ofconduct);
+        $('#editTraining-visimisi_oflife').val(data.visimisi_oflife);
+        $('#editTraining-training_sco').val(data.training_sco);
+        $('#editTraining-training_sales').val(data.training_sales);
+        $('#editTraining-kurir_program').val(data.kurir_program);
+
+        const modal = new bootstrap.Modal(document.getElementById('modalEditTraining'));
+        modal.show();
+      },
+      error: function (xhr, status, error) {
+        console.error("Gagal ambil data:", error);
+      }
+    });
+  });
+
+  // ========================================
+  // 15. SUBMIT EDIT KARYAWAN TRAINING
+  // ========================================
+  $(document).on('submit', '#formEditTraining', function (e) {
+    e.preventDefault();
+    const formData = $(this).serialize();
+    $.ajax({
+      url: BASE_URL + '/training/editTraining',
+      method: 'POST',
+      data: formData,
+      success: function () {
+        $('#modalEditTraining').modal('hide');
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil',
+          text: 'Data karyawan Training berhasil diperbarui!'
         }).then(() => location.reload());
       },
       error: function () {

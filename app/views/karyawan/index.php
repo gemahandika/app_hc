@@ -87,7 +87,7 @@
                             <tr class="bg-success text-white">
                                 <th class="small text-center bg-success">NO</th>
                                 <th class="small text-center bg-success">ACTION</th>
-                                <th class="small text-center">NAMA KARYAWAN</th>
+                                <th class="small text-center bg-success">NAMA KARYAWAN</th>
                                 <th class="small text-center">KATEGORI</th>
                                 <th class="small text-center">BRANCH</th>
                                 <th class="small text-center">KCU / AGEN / MITRA</th>
@@ -117,13 +117,6 @@
                                 <th class="small text-center">NAMA CV/PERUSAHAAN MITRA</th>
                                 <th class="small text-center">STATUS PEKERJAAN</th>
                                 <th class="small text-center">STATUS PERNIKAHAN</th>
-                                <th class="small text-center">KET INDUCTION</th>
-                                <th class="small text-center">SERVICE BY HEART</th>
-                                <th class="small text-center">CODE OF CONDUCT</th>
-                                <th class="small text-center">CREAT VISION, MISSION,TARGET & STRATGY OF LIFE</th>
-                                <th class="small text-center">TRAINING PROFESI SCO</th>
-                                <th class="small text-center">TRAINING PROFESI SALES</th>
-                                <th class="small text-center">JSC (KURIR DEV PROGRAM)</th>
                                 <th class="small text-center">ID CARD</th>
                                 <th class="small text-center">SERAGAM</th>
                             </tr>

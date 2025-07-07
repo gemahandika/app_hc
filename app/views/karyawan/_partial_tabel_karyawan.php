@@ -54,13 +54,6 @@ if (!empty($karyawan)) : ?>
             <td class="small text-center"><?= $karyawan['perusahaan_mitra'] ?></td>
             <td class="small text-center"><?= $karyawan['status_pekerjaan'] ?></td>
             <td class="small text-center"><?= $karyawan['status_pernikahan'] ?></td>
-            <td class="small text-center"><?= $karyawan['ket_induction'] ?></td>
-            <td class="small text-center"><?= $karyawan['service_byheart'] ?></td>
-            <td class="small text-center"><?= $karyawan['code_ofconduct'] ?></td>
-            <td class="small text-center"><?= $karyawan['visimisi_oflife'] ?></td>
-            <td class="small text-center"><?= $karyawan['training_sco'] ?></td>
-            <td class="small text-center"><?= $karyawan['training_sales'] ?></td>
-            <td class="small text-center"><?= $karyawan['kurir_program'] ?></td>
             <td class="small text-center"><?= $karyawan['id_card'] ?></td>
             <td class="small text-center"><?= $karyawan['seragam'] ?></td>
         </tr>
